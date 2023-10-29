@@ -22,6 +22,6 @@ typedef struct {
     Domino_piece *last_piece;
 } Player;
 
-int main()
+int main();
 
 #endif //DOMINO_LINEARE_MAIN_H

@@ -2,7 +2,9 @@
 // Created by andreixmanu on 28/10/23.
 //
 
-#include "main.c"
+#include "../include/main.h"
+#include <stdio.h>
+#include "../include/view_menu.h"
 
 void print_table(Table table) {
     Domino_piece *current_node = table.first_place;

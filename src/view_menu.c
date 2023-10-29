@@ -4,9 +4,9 @@
 
 #include "../include/view_menu.h"
 #include "../include/game.h"
-#include "main.c"
 #include "../include/view_menu.h"
 #include "../include/print.h"
+#include <stdio.h>
 
 
 void view_menu(){

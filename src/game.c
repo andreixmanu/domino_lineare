@@ -50,7 +50,7 @@ void create_player(Player player){
 }
 
 void init_game(){
-    create_table();
+    //create_table();
     //ask if the player wants a bot to play
     printf("Do you want a bot to play? (y/n): ");
     char answer;

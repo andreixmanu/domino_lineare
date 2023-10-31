@@ -9,8 +9,6 @@
 //either side has a number from 0 to 6
 
 int main(){
-
     view_menu();
-
     return 0;
 }

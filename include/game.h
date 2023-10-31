@@ -9,7 +9,7 @@
 #include "main.h"
 
 void create_table();
-void assign_pieces(Player player, int n);
+void assign_pieces(Player* player, int n);
 void init_game();
 
 #endif //DOMINO_LINEARE_GAME_H

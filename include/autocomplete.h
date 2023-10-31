@@ -1,0 +1,8 @@
+//
+// Created by manua on 30/10/2023.
+//
+
+#ifndef DOMINO_LINEARE_AUTOCOMPLETE_H
+#define DOMINO_LINEARE_AUTOCOMPLETE_H
+
+#endif //DOMINO_LINEARE_AUTOCOMPLETE_H

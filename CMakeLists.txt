@@ -12,7 +12,9 @@ add_executable(
                 src/view_menu.c
                 src/print.c
                 src/game.c
-        include/main.h
+                include/main.h
+                include/autocomplete.h
+                src/autocomplete.c
 )
 
 # Locate the Ncurses library

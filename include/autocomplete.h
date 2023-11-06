@@ -5,4 +5,8 @@
 #ifndef DOMINO_LINEARE_AUTOCOMPLETE_H
 #define DOMINO_LINEARE_AUTOCOMPLETE_H
 
+#include "../include/main.h"
+
+void autocomplete(Player* bot, Player* enemy_bot, Domino_piece* table);
+
 #endif //DOMINO_LINEARE_AUTOCOMPLETE_H

@@ -6,28 +6,34 @@
 #include <stdio.h>
 #include "../include/view_menu.h"
 
-void print_table(Table table) {
-    Domino_piece *current_node = table.first_place;
+
+void print_table(Domino_piece *table) {
+    if (table == NULL) {
+        printf("Table is empty\n");
+        return;
+    }
+
+    Domino_piece *current_node = table;
     while (current_node != NULL) {
         printf("%d|%d ", current_node->left_side, current_node->right_side);
-        current_node = (Domino_piece*) current_node->next;
+        current_node = current_node->next;
     }
     printf("\n");
 }
 
 
-//TODO print bug
 void print_player(Player player) {
-    printf("printing player\n");
+    //printf("printing player\n");
     if (player.first_piece == NULL) {
         printf("Player has no pieces\n");
         return;
     }
-
+    int i = 1;
     Domino_piece *current_node = player.first_piece;
     while (current_node != NULL) {
-        printf("%d|%d ", current_node->left_side, current_node->right_side);
+        printf("%d: %d|%d\n",i, current_node->left_side, current_node->right_side);
         current_node = current_node->next;
+        i++;
     }
     printf("\n");
 }

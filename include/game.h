@@ -10,9 +10,13 @@
 #include "main.h"
 
 Domino_piece* create_table();
+Domino_piece* get_player_piece(Player* player, int n);
 Domino_piece* append_piece(Domino_piece * table, int left, int right);
+Domino_piece* prepend_piece(Domino_piece * table, int left, int right);
 void assign_pieces(Player* player, int n);
-void human_vs_cpu(Player* player1, Player* player2, Domino_piece** table);
+void human_vs_cpu(Player* player1, Player* player2, Domino_piece* table);
+int check_move(Player* player, Domino_piece * table, int n, int side);
+void use_piece(Player* player1, Domino_piece* table, int n, int side);
 void init_game();
 
 #endif //DOMINO_LINEARE_GAME_H

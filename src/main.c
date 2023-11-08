@@ -5,10 +5,12 @@
 #include "../include/game.h"
 #include <stdbool.h>
 #include "../include/main.h"
+#include <time.h>
 
 //either side has a number from 0 to 6
 
 int main(){
+    srand(time(NULL));
     view_menu();
     return 0;
 }

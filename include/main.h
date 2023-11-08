@@ -5,22 +5,19 @@
 #ifndef DOMINO_LINEARE_MAIN_H
 #define DOMINO_LINEARE_MAIN_H
 
-typedef struct {
+typedef struct dominio_piece Domino_piece;
+struct dominio_piece {
     int left_side;
     int right_side;
-    struct Domino_piece *next;
-    struct Domino_piece *previous;
-} Domino_piece;
+    Domino_piece *next;
+    Domino_piece *previous;
+};
 
-typedef struct {
-    Domino_piece *first_place;
-    Domino_piece *last_place;
-} Table;
-
-typedef struct {
+typedef struct player Player;
+struct player {
     Domino_piece *first_piece;
     Domino_piece *last_piece;
-} Player;
+};
 
 int main();
 

@@ -21,7 +21,7 @@ Domino_piece *create_table() {
 Domino_piece *get_player_piece(Player *player, int n) {
     //traverse player to the n-th piece and return the piece
     Domino_piece *current_node = player->first_piece;
-    for (int i = 0; i < n && current_node != NULL; i++)
+    for (int i = 1; i < n && current_node != NULL; i++)
         current_node = current_node->next;
     return current_node;
 }
@@ -34,28 +34,25 @@ Domino_piece *get_table_piece(Domino_piece *table, int n) {
     return current_node;
 }
 
-Domino_piece *append_piece(Domino_piece *table, int left, int right) {
+void append_piece(Domino_piece **table, int left_side, int right_side) {
     Domino_piece *new_piece = (Domino_piece *) malloc(sizeof(Domino_piece));
-    new_piece->left_side = left;
-    new_piece->right_side = right;
+    new_piece->left_side = left_side;
+    new_piece->right_side = right_side;
     new_piece->next = NULL;
     new_piece->previous = NULL;
 
-    if (table == NULL) {
-        // If the table is empty, return the new piece as the table
-        return new_piece;
+    if (*table == NULL) {
+        *table = new_piece;
     } else {
-        // Find the last piece in the table
-        Domino_piece *current = table;
-        while (current->next != NULL) {
-            current = current->next;
+        Domino_piece *current_node = *table;
+        while (current_node->next != NULL) {
+            current_node = current_node->next;
         }
-        // Append the new piece to the end
-        current->next = new_piece;
-        new_piece->previous = current;
-        return table;
+        current_node->next = new_piece;
+        new_piece->previous = current_node;
     }
 }
+
 
 Domino_piece *prepend_piece(Domino_piece *table, int left, int right) {
     Domino_piece *new_piece = (Domino_piece *) malloc(sizeof(Domino_piece));
@@ -73,15 +70,31 @@ Domino_piece *prepend_piece(Domino_piece *table, int left, int right) {
     }
 }
 
+//FIXME assigns 0|0 pieces sometimes
 void assign_pieces(Player *player, int n) {
 
     //array of possible pieces
     int possible_pieces[28][2] = {
-            {1, 1}, {1, 2}, {1, 3}, {1, 4}, {1, 5}, {1 ,6},
-            {2, 2}, {2, 3}, {2, 4}, {2, 5}, {2, 6},
-            {3, 3}, {3, 4}, {3, 5}, {3, 6},
-            {4, 4}, {4, 5}, {4, 6},
-            {5, 5}, {5, 6},
+            {1, 1},
+            {1, 2},
+            {1, 3},
+            {1, 4},
+            {1, 5},
+            {1, 6},
+            {2, 2},
+            {2, 3},
+            {2, 4},
+            {2, 5},
+            {2, 6},
+            {3, 3},
+            {3, 4},
+            {3, 5},
+            {3, 6},
+            {4, 4},
+            {4, 5},
+            {4, 6},
+            {5, 5},
+            {5, 6},
             {6, 6}
     };
 
@@ -104,12 +117,13 @@ void assign_pieces(Player *player, int n) {
             player->first_piece = new_node;
             player->last_piece = new_node;
         } else {
-            player->last_piece->next = (struct Domino_piece *) new_node;
-            new_node->previous = (struct Domino_piece *) player->last_piece;
+            player->last_piece->next = new_node;
+            new_node->previous = player->last_piece;
             player->last_piece = new_node;
         }
     }
 }
+
 
 Player create_player() {
     Player player;
@@ -179,7 +193,7 @@ void use_piece(Player *player1, Domino_piece *table, int n, int side) {
     if (check_move(player1, table, n, side)) {
         printf("Move allowed\n");
         if (side == RIGHT_SIDE) {
-            table = append_piece(table, current_node->left_side, current_node->right_side);
+            append_piece(table, current_node->left_side, current_node->right_side);
         } else if (side == LEFT_SIDE) {
             table = prepend_piece(table, current_node->left_side, current_node->right_side);
         }
@@ -197,8 +211,8 @@ void use_piece(Player *player1, Domino_piece *table, int n, int side) {
         player1->last_piece = current_node->previous;
         if (player1->last_piece != NULL) player1->last_piece->next = NULL;
     } else {
-        Domino_piece *previous_node = (Domino_piece *) current_node->previous;
-        Domino_piece *next_node = (Domino_piece *) current_node->next;
+        Domino_piece *previous_node = current_node->previous;
+        Domino_piece *next_node = current_node->next;
         previous_node->next = next_node;
         next_node->previous = previous_node;
     }
@@ -206,19 +220,9 @@ void use_piece(Player *player1, Domino_piece *table, int n, int side) {
 }
 
 
-void human_vs_cpu(Player *player1, Player *player2, Domino_piece *table) {
-    printf("\nChe il gioco abbia inizio!\n"
-           "Scegli la prima carta che vuoi giocare:\n");
-    print_player(*player1);
+void human_vs_cpu(Player *player1, Player *player2, Domino_piece *table, int nPieces) {
 
-    int choice, side = 0;
-    scanf("%d", &choice);
-
-    if (choice < 1 || choice > 7) {
-        printf("Invalid choice. Please choose a valid piece.\n");
-        return human_vs_cpu(player1, player2, table);
-    }
-
+    int side;
     if (table != NULL) {
         //table is not empty
         printf("La vuoi giocare a sinistra o a destra del tavolo? (0/1):\n");
@@ -226,23 +230,24 @@ void human_vs_cpu(Player *player1, Player *player2, Domino_piece *table) {
 
         if (side != LEFT_SIDE && side != RIGHT_SIDE) {
             printf("Invalid side. Please choose 0 for left or 1 for right.\n");
-            return human_vs_cpu(player1, player2, table);
+            return human_vs_cpu(player1, player2, table, nPieces);
         }
         //check if move is allowed
-        if (check_move(player1, table, choice, side)) {
-            use_piece(player1, table, choice, side);
+        if (check_move(player1, table, nPieces, side)) {
+            use_piece(player1, table, nPieces, side);
             printf("DEBUG: Table should have one piece\n");
             print_table(table);
         }
-    } else { //table is empty
-        //append first piece
-        printf("DEBUG: table is null, appending first piece\n");
-        Domino_piece *new_piece = get_player_piece(player1, choice);
-        printf("DEBUG: first piece initialized\n");
-        append_piece(table, new_piece->left_side, new_piece->right_side);
-        printf("DEBUG: first piece appended\n");
-        printf("DEBUG: First piece placed!\n");
-        //print_table(*table);
+    } else { //table is empty, append first piece
+        //printf("DEBUG: table is null, appending first piece\n");
+        Domino_piece *new_piece = get_player_piece(player1, nPieces);
+        //printf("DEBUG: first piece initialized\n");
+        append_piece(&table, new_piece->left_side, new_piece->right_side);
+        //printf("DEBUG: first piece appended\n");
+        //printf("DEBUG: First piece placed!\n");
+        //printf("DEBUG: Piece that has to be printed is %d|%d\n", new_piece->left_side, new_piece->right_side);
+        print_table(table);
+        cpu_move(player2, table);
     }
 }
 
@@ -280,10 +285,19 @@ void init_game() {
         assign_pieces(&player, pieces);
         //print_player(player);
         enemy_bot = create_player();
-        printf("DEBUG: Table should be empty\n");
-        print_table(table);
-
-        human_vs_cpu(&player, &enemy_bot, table);
+        assign_pieces(&enemy_bot, pieces);
+        //printf("DEBUG: Table should be empty\n");
+        //print_table(table);
+        printf("\nChe il gioco abbia inizio!\n"
+               "Scegli la prima carta che vuoi giocare:\n");
+        print_player(player);
+        int choice;
+        scanf("%d", &choice);
+        if (choice < 1 || choice > 7) {
+            printf("Invalid choice. Please choose a valid piece.\n");
+            return init_game();
+        }
+        human_vs_cpu(&player, &enemy_bot, table, choice);
 
     } else {
         printf("Invalid answer\n");

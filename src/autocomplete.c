@@ -10,10 +10,9 @@ void autocomplete(Player *bot, Player *enemy_bot, Domino_piece *table) {
     //TODO implementare AI
 }
 
-Domino_piece *cpu_move(Player *bot, Domino_piece *table) {
+void cpu_move(Player *bot, Domino_piece *table) {
 
     printf("DEBUG: Print bots pieces\n");
     print_player(*bot);
-
-    return table;
+    
 }

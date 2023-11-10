@@ -9,7 +9,8 @@
 5. [ ] Assegnazione dei pezzi del giocatore sul tavolo
 6. [x] Creazione di una funzione per la stampa del tavolo di gioco
 7. [x] Creazione di una funzione per la stampa dei pezzi dei giocatori
-8. [ ] Creazione di una funzione per la stampa dei pezzi del tavolo
+8. [x] Creazione di una funzione per la stampa dei pezzi del tavolo
+9. [ ] Creazione di una funzione per la mossa della CPU
 
 ## Bug fix
 

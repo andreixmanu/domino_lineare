@@ -15,7 +15,7 @@ Domino_piece *get_player_piece(Player *player, int n);
 
 void append_piece(Domino_piece **table, int left_side, int right_side);
 
-Domino_piece *prepend_piece(Domino_piece *table, int left, int right);
+void prepend_piece(Domino_piece **table, int left, int right);
 
 void assign_pieces(Player *player, int n);
 

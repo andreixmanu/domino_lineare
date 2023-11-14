@@ -16,4 +16,9 @@
 
 1. [x] Errore di stampa dei pezzi del giocatore/bot
 2. [ ] Errore di assegnazione dei pezzi: Possibili combinazioni [0|0]
-3. 
+
+## AI implementation
+
+1. CPU controlla il primo ed ultimo pezzo del tavolo
+2. CPU controlla i suoi pezzi
+3. CPU usa il pezzo che garantisce più punti

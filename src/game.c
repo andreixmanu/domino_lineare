@@ -54,21 +54,20 @@ void append_piece(Domino_piece **table, int left_side, int right_side) {
 }
 
 
-Domino_piece *prepend_piece(Domino_piece *table, int left, int right) {
+void prepend_piece(Domino_piece **table, int left, int right) {
     Domino_piece *new_piece = (Domino_piece *) malloc(sizeof(Domino_piece));
     new_piece->left_side = left;
     new_piece->right_side = right;
-    new_piece->next = NULL;
+    new_piece->next = *table;
     new_piece->previous = NULL;
 
-    if (table == NULL) {
-        return new_piece;
-    } else {
-        new_piece->next = table;
-        table->previous = new_piece;
-        return new_piece;
+    if (*table != NULL) {
+        (*table)->previous = new_piece;
     }
+
+    *table = new_piece;
 }
+
 
 //FIXME assigns 0|0 pieces sometimes
 void assign_pieces(Player *player, int n) {
@@ -193,16 +192,16 @@ void use_piece(Player *player1, Domino_piece *table, int n, int side) {
     if (check_move(player1, table, n, side)) {
         printf("Move allowed\n");
         if (side == RIGHT_SIDE) {
-            append_piece(table, current_node->left_side, current_node->right_side);
+            append_piece((Domino_piece **) table, current_node->left_side, current_node->right_side);
         } else if (side == LEFT_SIDE) {
-            table = prepend_piece(table, current_node->left_side, current_node->right_side);
+            prepend_piece((Domino_piece **) table, current_node->left_side, current_node->right_side);
         }
     } else {
         printf("Move not allowed\n");
         //TODO handle error
         return;
     }
-
+    printf("Piece placed");
     // Remove piece from player
     if (current_node->previous == NULL) {
         player1->first_piece = current_node->next;
@@ -216,6 +215,7 @@ void use_piece(Player *player1, Domino_piece *table, int n, int side) {
         previous_node->next = next_node;
         next_node->previous = previous_node;
     }
+    printf("Piece used!\n");
     free(current_node);
 }
 

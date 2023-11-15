@@ -168,40 +168,35 @@ int check_move(Player *player, Domino_piece *table, int n, int side) {
     }
     return 0;
 }
-
 void use_piece(Player *player1, Domino_piece *table, int n, int side) {
-
-    //TODO handle error
     if (n <= 0) return;
 
     Domino_piece *current_node = player1->first_piece;
 
-    // Traverse the player's hand to find the n-th piece
     int i;
     for (i = 1; i < n && current_node != NULL; i++)
         current_node = current_node->next;
 
-    // Element not found or n exceeds the number of pieces, handle the error
     if (i < n || current_node == NULL) {
         printf("Element not found or n exceeds the number of pieces\n");
-        //TODO handle error
         return;
     }
 
-    // Check if move is allowed and append/prepend piece to table
+    // Add debug statements to trace execution
+    //printf("Before check_move\n");
     if (check_move(player1, table, n, side)) {
         printf("Move allowed\n");
         if (side == RIGHT_SIDE) {
-            append_piece((Domino_piece **) table, current_node->left_side, current_node->right_side);
+            append_piece((Domino_piece **) &table, current_node->left_side, current_node->right_side);
         } else if (side == LEFT_SIDE) {
-            prepend_piece((Domino_piece **) table, current_node->left_side, current_node->right_side);
+            prepend_piece((Domino_piece **) &table, current_node->left_side, current_node->right_side);
         }
     } else {
         printf("Move not allowed\n");
-        //TODO handle error
         return;
     }
-    printf("Piece placed");
+    //printf("Piece placed\n");
+
     // Remove piece from player
     if (current_node->previous == NULL) {
         player1->first_piece = current_node->next;
@@ -216,8 +211,11 @@ void use_piece(Player *player1, Domino_piece *table, int n, int side) {
         next_node->previous = previous_node;
     }
     printf("Piece used!\n");
+    printf("Inside use_piece:\n");
+    print_table(table);
     free(current_node);
 }
+
 
 
 void human_vs_cpu(Player *player1, Player *player2, Domino_piece *table, int nPieces) {
@@ -247,6 +245,7 @@ void human_vs_cpu(Player *player1, Player *player2, Domino_piece *table, int nPi
         //printf("DEBUG: First piece placed!\n");
         //printf("DEBUG: Piece that has to be printed is %d|%d\n", new_piece->left_side, new_piece->right_side);
         print_table(table);
+        printf("Now it's the bots turn.\n");
         cpu_move(player2, table);
     }
 }

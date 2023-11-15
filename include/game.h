@@ -13,6 +13,8 @@ Domino_piece *create_table();
 
 Domino_piece *get_player_piece(Player *player, int n);
 
+Domino_piece *get_table_piece(Domino_piece *table, int n);
+
 void append_piece(Domino_piece **table, int left_side, int right_side);
 
 void prepend_piece(Domino_piece **table, int left, int right);
@@ -20,6 +22,8 @@ void prepend_piece(Domino_piece **table, int left, int right);
 void assign_pieces(Player *player, int n);
 
 void human_vs_cpu(Player *player1, Player *player2, Domino_piece *table, int nPieces);
+
+Player create_player();
 
 int check_move(Player *player, Domino_piece *table, int n, int side);
 

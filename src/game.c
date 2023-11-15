@@ -69,7 +69,7 @@ void prepend_piece(Domino_piece **table, int left, int right) {
 }
 
 
-//FIXME assigns 0|0 pieces sometimes
+//TODO assigns 0|0 pieces sometimes
 void assign_pieces(Player *player, int n) {
 
     //array of possible pieces
@@ -195,7 +195,7 @@ void use_piece(Player *player1, Domino_piece *table, int n, int side) {
         printf("Move not allowed\n");
         return;
     }
-    //printf("Piece placed\n");
+    printf("Piece placed\n");
 
     // Remove piece from player
     if (current_node->previous == NULL) {
@@ -210,11 +210,16 @@ void use_piece(Player *player1, Domino_piece *table, int n, int side) {
         previous_node->next = next_node;
         next_node->previous = previous_node;
     }
-    printf("Piece used!\n");
+    printf("Piece removed\n");
+
     printf("Inside use_piece:\n");
     print_table(table);
+
+    // Move free after finishing using current_node data
     free(current_node);
+    //printf("Piece used!\n");
 }
+
 
 
 

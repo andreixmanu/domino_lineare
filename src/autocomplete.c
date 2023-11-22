@@ -79,14 +79,20 @@ Id_piece decide_piece(Domino_piece* table, Player* bot) {
         }
         check_right = check_right->previous;
     }
+    printf("DEBUG: Returning piece is %d on side %d\n", returning_piece.npiece, returning_piece.side);
+    returning_piece.npiece++;
     return returning_piece;
 }
 
 void cpu_move(Player *bot, Domino_piece *table) {
-    //printf("DEBUG: Print bots pieces\n");
+    printf("Bot's pieces:\n");
     print_player(*bot);
+
     Id_piece piece = decide_piece(table, bot);
+    printf("DEBUG: Bot has decided to use piece %d on side %d\n", piece.npiece, piece.side);
+
     use_piece(bot, table, piece.npiece, piece.side);
+
     printf("Printing new table\n");
     print_table(table);
 }

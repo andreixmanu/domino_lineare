@@ -73,7 +73,7 @@ void prepend_piece(Domino_piece **table, int left, int right) {
 void assign_pieces(Player *player, int n) {
 
     //array of possible pieces
-    int possible_pieces[28][2] = {
+    const int possible_pieces[28][2] = {
             {1, 1},
             {1, 2},
             {1, 3},
@@ -169,7 +169,11 @@ int check_move(Player *player, Domino_piece *table, int n, int side) {
     return 0;
 }
 void use_piece(Player *player1, Domino_piece *table, int n, int side) {
-    if (n <= 0) return;
+
+    if (n <= 0){
+        printf("n = 0\n");
+        return; //TODO handle error
+    }
 
     Domino_piece *current_node = player1->first_piece;
 
@@ -185,17 +189,17 @@ void use_piece(Player *player1, Domino_piece *table, int n, int side) {
     // Add debug statements to trace execution
     //printf("Before check_move\n");
     if (check_move(player1, table, n, side)) {
-        printf("Move allowed\n");
+        //printf("Move allowed\n");
         if (side == RIGHT_SIDE) {
             append_piece((Domino_piece **) &table, current_node->left_side, current_node->right_side);
         } else if (side == LEFT_SIDE) {
             prepend_piece((Domino_piece **) &table, current_node->left_side, current_node->right_side);
         }
     } else {
-        printf("Move not allowed\n");
+        printf("Move not allowed: side = %d\n", side);
         return;
     }
-    printf("Piece placed\n");
+    //printf("Piece placed\n");
 
     // Remove piece from player
     if (current_node->previous == NULL) {
@@ -210,18 +214,15 @@ void use_piece(Player *player1, Domino_piece *table, int n, int side) {
         previous_node->next = next_node;
         next_node->previous = previous_node;
     }
-    printf("Piece removed\n");
+    //printf("Piece removed\n");
 
-    printf("Inside use_piece:\n");
-    print_table(table);
+    //printf("Inside use_piece:\n");
+    //print_table(table);
 
     // Move free after finishing using current_node data
     free(current_node);
     //printf("Piece used!\n");
 }
-
-
-
 
 void human_vs_cpu(Player *player1, Player *player2, Domino_piece *table, int nPieces) {
 

@@ -54,7 +54,6 @@ void append_piece(Domino_piece **table, int left_side, int right_side) {
     }
 }
 
-
 void prepend_piece(Domino_piece **table, int left, int right) {
     Domino_piece *new_piece = (Domino_piece *) malloc(sizeof(Domino_piece));
     new_piece->left_side = left;
@@ -69,8 +68,6 @@ void prepend_piece(Domino_piece **table, int left, int right) {
     *table = new_piece;
 }
 
-
-//TODO assigns 0|0 pieces sometimes
 void assign_pieces(Player *player, int n) {
     const int possible_pieces[21][2] = {
             {1, 1}, {1, 2}, {1, 3}, {1, 4}, {1, 5}, {1, 6},
@@ -284,7 +281,7 @@ void init_game() {
         autocomplete(&bot, &enemy_bot, table);
 
     }
-        //Human vs CPU mode
+    //Human vs CPU mode
     else if (answer == 'n') {
 
         player = create_player();

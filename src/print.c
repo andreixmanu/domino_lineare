@@ -5,6 +5,7 @@
 #include "../include/main.h"
 #include <stdio.h>
 #include "../include/view_menu.h"
+#include "../include/game.h"
 
 
 void print_table(Domino_piece *table) {
@@ -12,21 +13,24 @@ void print_table(Domino_piece *table) {
         printf("Table is empty\n");
         return;
     }
-
+    int i = 0;
     Domino_piece *current_node = table;
     while (current_node != NULL) {
         printf("%d|%d ", current_node->left_side, current_node->right_side);
         current_node = current_node->next;
+        i++;
     }
     printf("\n");
+    printf("DEBUG: Table contains %d pieces\n", i);
 }
 
 
 void print_player(Player player) {
     //printf("printing player\n");
     if (player.first_piece == NULL) {
-        printf("Player has no pieces\n");
-        return;
+        printf("Player has no pieces, assigning now.\n");
+        assign_pieces(&player, 7);
+        print_player(player);
     }
     int i = 1;
     Domino_piece *current_node = player.first_piece;

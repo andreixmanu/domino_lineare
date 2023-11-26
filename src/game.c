@@ -55,18 +55,26 @@ void append_piece(Domino_piece **table, int left_side, int right_side) {
 }
 
 void prepend_piece(Domino_piece **table, int left, int right) {
-    Domino_piece *new_piece = (Domino_piece *) malloc(sizeof(Domino_piece));
+    Domino_piece *new_piece = (Domino_piece *)malloc(sizeof(Domino_piece));
+    if (new_piece == NULL) {
+        fprintf(stderr, "Errore nell'allocazione di memoria per il pezzo.\n");
+        exit(EXIT_FAILURE);
+    }
+
     new_piece->left_side = left;
     new_piece->right_side = right;
-    new_piece->next = *table;
     new_piece->previous = NULL;
 
     if (*table != NULL) {
+        new_piece->next = *table;
         (*table)->previous = new_piece;
+    } else {
+        new_piece->next = NULL;
     }
 
     *table = new_piece;
 }
+
 
 void assign_pieces(Player *player, int n) {
     const int possible_pieces[21][2] = {
@@ -141,7 +149,7 @@ int check_move(Player *player, Domino_piece *table, int n, int side) {
         }
         else if(last_table_node->right_side != current_node->left_side){
             return MOVE_NOT_ALLOWED;
-        } else exit(1);
+        } else exit(66);
 
     }
     else if (side == LEFT_SIDE) { //controlla il lato sinistro del tavolo
@@ -155,7 +163,7 @@ int check_move(Player *player, Domino_piece *table, int n, int side) {
         }
         else if(table->left_side != current_node->right_side){
             return MOVE_NOT_ALLOWED;
-        } else exit(1);
+        } else exit(33);
 
     }
 
@@ -165,8 +173,7 @@ int check_move(Player *player, Domino_piece *table, int n, int side) {
 
 
 void use_piece(Player *player1, Domino_piece *table, int n, int side) {
-
-    if (n <= 0){ //n is invalid
+    if (n <= 0) {
         printf("n = %d\n", n);
         return;
     }
@@ -182,23 +189,16 @@ void use_piece(Player *player1, Domino_piece *table, int n, int side) {
         return;
     }
 
-    //printf("DEBUG: Inside use_piece, the piece being used is %d|%d\n", current_node->left_side, current_node->right_side);
-
-    //printf("Before check_move\n");
+    // Check if the move is allowed
     if (check_move(player1, table, n, side)) {
-        printf("DEBUG1: Check move returned: %d\n", check_move(player1, table, n, side));
         if (side == RIGHT_SIDE) {
-            append_piece((Domino_piece **) &table, current_node->left_side, current_node->right_side);
-            printf("Piece placed on right side\n");
+            append_piece(&table, current_node->left_side, current_node->right_side);
         } else if (side == LEFT_SIDE) {
-            prepend_piece((Domino_piece **) &table, current_node->left_side, current_node->right_side);
-            printf("Piece placed on left side\n");
+            prepend_piece(&table, current_node->left_side, current_node->right_side);
         }
     } else {
-        printf("DEBUG2: Check move returned: %d\n", check_move(player1, table, n, side));
-        exit(1);
+        exit(999);
     }
-    //printf("Piece placed\n");
 
     // Remove piece from player
     if (current_node->previous == NULL) {
@@ -213,14 +213,9 @@ void use_piece(Player *player1, Domino_piece *table, int n, int side) {
         previous_node->next = next_node;
         next_node->previous = previous_node;
     }
-    //printf("Piece removed\n");
 
-    //printf("Inside use_piece:\n");
-    //print_table(table);
-
-    // Move free after finishing using current_node data
+    // Free memory after finishing using current_node data
     free(current_node);
-    //printf("Piece used!\n");
 }
 
 void human_vs_cpu(Player *player1, Player *player2, Domino_piece *table, int nPieces) {
@@ -228,6 +223,18 @@ void human_vs_cpu(Player *player1, Player *player2, Domino_piece *table, int nPi
     int side;
     if (table != NULL) {
         //table is not empty
+        printf("Your turn!\n");
+        print_player(*player1);
+
+        printf("Which piece do you want to place on the table?\n");
+        printf("Press q to surrender if you don't have any pieces that can be placed on the table.\n");
+        int choice;
+        scanf("%d", &choice);
+        //check if player wants to surrender
+        if (choice == 'q') {
+            printf("You surrendered. The bot wins!\n");
+            exit(0);
+        }
         printf("Do you want to place it to the left or to the right side of the table? (0/1):\n");
         scanf("%d", &side);
 
@@ -238,19 +245,19 @@ void human_vs_cpu(Player *player1, Player *player2, Domino_piece *table, int nPi
         //check if move is allowed
         if (check_move(player1, table, nPieces, side)) {
             use_piece(player1, table, nPieces, side);
-            //printf("DEBUG: Table should have one piece\n");
             print_table(table);
+        } else {
+            printf("Invalid move. Please choose a valid piece.\n");
+            return human_vs_cpu(player1, player2, table, nPieces);
+
         }
     } else { //table is empty, append first piece
-        //printf("DEBUG: table is null, appending first piece\n");
         Domino_piece *new_piece = get_player_piece(player1, nPieces);
         append_piece(&table, new_piece->left_side, new_piece->right_side);
-        //printf("DEBUG: first piece appended\n");
-        //printf("DEBUG: First piece placed!\n");
-        //printf("DEBUG: Piece that has to be printed is %d|%d\n", new_piece->left_side, new_piece->right_side);
         print_table(table);
         printf("Now it's the bots turn.\n");
         cpu_move(player2, table);
+        human_vs_cpu(player1, player2, table, nPieces);
     }
 }
 
@@ -291,8 +298,8 @@ void init_game() {
         assign_pieces(&enemy_bot, pieces);
         //printf("DEBUG: Table should be empty\n");
         //print_table(table);
-        printf("\nChe il gioco abbia inizio!\n"
-               "Scegli la prima carta che vuoi giocare:\n");
+        printf("\nLet the game begin!\n"
+               "Choose the first piece you want to place:\n");
         print_player(player);
         int choice;
         scanf("%d", &choice);

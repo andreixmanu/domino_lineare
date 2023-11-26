@@ -87,7 +87,7 @@ Id_piece decide_piece(Domino_piece* table, Player* bot) {
 }
 
 Id_piece stupid_move(Domino_piece* table, Player* bot) {
-    printf("DEBUG: Inside stupid_move\n");
+    //printf("DEBUG: Inside stupid_move\n");
     Id_piece returning_piece = {0, rand() % 2 == 0 ? LEFT_SIDE : RIGHT_SIDE}; // Decide casualmente tra LEFT_SIDE e RIGHT_SIDE
     Domino_piece* temp = bot->first_piece;
     short index = 1;
@@ -97,23 +97,23 @@ Id_piece stupid_move(Domino_piece* table, Player* bot) {
         printf("Bot has no pieces, you won the game!");
         exit(0);
     }
-    printf("First check\n");
+    //printf("First check\n");
     if (returning_piece.side == LEFT_SIDE) {
         Domino_piece* first_piece = get_first_table_piece(table);
-        while (first_piece != NULL) {
+        while (temp != NULL) {
             if (first_piece->left_side == temp->right_side) {
-                returning_piece.npiece = index;
+                returning_piece.npiece = index++;
                 return returning_piece;
             }
             index++;
             temp = temp->next;
         }
-        printf("Vado nel primo else if\n");
+        //printf("Vado nel primo else if\n");
     } else if (returning_piece.side == RIGHT_SIDE) {
         Domino_piece* last_piece = get_last_table_piece(table);
-        while (last_piece != NULL) {
+        while (temp != NULL) {
             if (last_piece->right_side == temp->left_side) {
-                returning_piece.npiece = index;
+                returning_piece.npiece = index++;
                 return returning_piece;
             }
             index++;
@@ -130,12 +130,12 @@ Id_piece stupid_move(Domino_piece* table, Player* bot) {
         printf("Bot has no pieces, you won the game!");
         exit(0);
     }
-    printf("Second check\n");
+    //printf("Second check\n");
     if (returning_piece.side == LEFT_SIDE) {
         Domino_piece* other_piece = get_last_table_piece(table);
-        while (other_piece != NULL) {
+        while (temp2 != NULL) {
             if (other_piece->right_side == temp2->left_side) {
-                returning_piece.npiece = index;
+                returning_piece.npiece = index++;
                 return returning_piece;
             }
             temp2 = temp2->next;
@@ -144,9 +144,9 @@ Id_piece stupid_move(Domino_piece* table, Player* bot) {
         printf("Entro nel secondo else if\n");
     } else if (returning_piece.side == RIGHT_SIDE) {
         Domino_piece* other_first_piece = get_first_table_piece(table);
-        while (other_first_piece != NULL) {
+        while (temp2 != NULL) {
             if (other_first_piece->left_side == temp2->right_side) {
-                returning_piece.npiece = index;
+                returning_piece.npiece = index++;
                 return returning_piece;
             }
             temp2 = temp2->next;

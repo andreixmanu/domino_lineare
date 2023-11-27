@@ -3,6 +3,9 @@
 //
 
 #include "../include/game.h"
+
+#include <stdbool.h>
+
 #include "../include/print.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -261,6 +264,43 @@ void human_vs_cpu(Player *player1, Player *player2, Domino_piece *table, int nPi
     }
 }
 
+void singleplayer(const int pieces, Domino_piece* table) {
+    Player player = create_player();
+    assign_pieces(&player, pieces);
+
+    while(player.first_piece != NULL){
+
+        printf("Your pieces:\n");
+        print_player(player);
+
+        printf("Which piece do you want to place?\n");
+        int piece;
+        scanf("%d", &piece);
+        Domino_piece * used_piece = get_player_piece(&player, pieces);
+
+        //append first piece
+        if(table == NULL) {
+            append_piece(&table, used_piece->left_side, used_piece->right_side);
+            print_table(table);
+            continue;
+        }
+
+        //append / prepend next piece
+        printf("Where do you want to place it? (Left :0, Right: 1)\n");
+        int side;
+        scanf("%d", &side);
+
+        if(side == LEFT_SIDE) prepend_piece(&table, used_piece->left_side, used_piece->right_side);
+        else if(side == RIGHT_SIDE) append_piece(&table, used_piece->left_side, used_piece->right_side);
+        else {
+            printf("Invalid side. Please choose 0 for left or 1 for right.\n");
+            singleplayer(pieces, table);
+        }
+        print_table(table);
+    }
+
+}
+
 void init_game() {
 
     Domino_piece *table = create_table();
@@ -269,48 +309,37 @@ void init_game() {
     int pieces;
     scanf("%d", &pieces);
 
-    printf("Do you want a bot to play? (y/n):\n");
-    char answer;
-    scanf(" %c", &answer);
+    printf("Choose the game mode:\n");
+    printf("1. Singleplayer\n");
+    printf("2. Player vs CPU\n");
+    printf("3. CPU\n");
 
-    Player bot;
-    Player player;
-    Player enemy_bot;
+    int gameMode;
+    scanf("%d", &gameMode);
 
-    //CPU vs CPU mode
-    if (answer == 'y') {
+    switch (gameMode) {
+        case 1:
+            singleplayer(pieces, table);
+            break;
 
-        bot = create_player();
-        assign_pieces(&bot, pieces);
-        print_player(bot);
-        //create enemy bot, assign pieces and print enemy bot
-        enemy_bot = create_player();
-        autocomplete(&bot, &enemy_bot, table);
+        case 2: // PVE mode
+            Player player = create_player();
+            assign_pieces(&player, pieces);
+            Player bot = create_player();
+            assign_pieces(&bot, pieces);
+            human_vs_cpu(&player, &bot, table, pieces);
+        break;
 
-    }
-    //Human vs CPU mode
-    else if (answer == 'n') {
+        case 3:
+            Player bot1 = create_player();
+            assign_pieces(&bot1, pieces);
+            Player bot2 = create_player();
+            assign_pieces(&bot2, pieces);
+            autocomplete(&bot1, &bot2, table);
+        break;
 
-        player = create_player();
-        assign_pieces(&player, pieces);
-        //print_player(player);
-        enemy_bot = create_player();
-        assign_pieces(&enemy_bot, pieces);
-        //printf("DEBUG: Table should be empty\n");
-        //print_table(table);
-        printf("\nLet the game begin!\n"
-               "Choose the first piece you want to place:\n");
-        print_player(player);
-        int choice;
-        scanf("%d", &choice);
-        if (choice < 1 || choice > 7) {
-            printf("Invalid choice. Please choose a valid piece.\n");
-            return init_game();
-        }
-        human_vs_cpu(&player, &enemy_bot, table, choice);
-
-    } else {
-        printf("Invalid answer\n");
-        init_game();
+        default:
+            printf("Invalid game mode. Exiting.\n");
+            init_game();
     }
 }

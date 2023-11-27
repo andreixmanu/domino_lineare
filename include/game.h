@@ -29,6 +29,8 @@ int check_move(Player *player, Domino_piece *table, int n, int side);
 
 void use_piece(Player *player1, Domino_piece *table, int n, int side);
 
+void singleplayer(const int pieces, Domino_piece *table);
+
 void init_game();
 
 #endif //DOMINO_LINEARE_GAME_H

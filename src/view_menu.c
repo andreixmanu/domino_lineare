@@ -12,7 +12,7 @@
 void view_menu(){
 
     //variables
-    int option;
+    int option = 0;
 
     printf("Welcome to Domino Lineare!\n");
     printf("1. Play\n");

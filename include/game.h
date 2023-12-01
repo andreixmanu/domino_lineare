@@ -15,21 +15,21 @@ Domino_piece *get_player_piece(Player *player, int n);
 
 Domino_piece *get_table_piece(Domino_piece *table, int n);
 
-void append_piece(Domino_piece **table, int left_side, int right_side);
+void append_piece(Domino_piece **table, Domino_piece* piece);
 
-void prepend_piece(Domino_piece **table, int left, int right);
+void prepend_piece(Domino_piece **table, Domino_piece* piece);
 
 void assign_pieces(Player *player, int n);
 
-void human_vs_cpu(Player *player1, Player *player2, Domino_piece *table, int nPieces);
+//void human_vs_cpu(Player *player1, Player *player2, Domino_piece *table, int nPieces);
 
 Player create_player();
 
-int check_move(Player *player, Domino_piece *table, int n, int side);
+int check_move(Domino_piece* piece, Domino_piece *table, int side);
 
-void use_piece(Player *player1, Domino_piece *table, int n, int side);
+void use_piece(Domino_piece* piece, Domino_piece *table, int side);
 
-void singleplayer(const int pieces, Domino_piece *table);
+void singleplayer(int pieces, Domino_piece* table);
 
 void init_game();
 

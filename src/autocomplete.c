@@ -13,7 +13,7 @@
 #define RIGHT_SIDE 1
 
 
-void autocomplete(Player *bot, Player *enemy_bot, Domino_piece *table) {
+void autocomplete(Player *bot, Domino_piece *table) {
     //TODO implementare AI
 }
 
@@ -170,7 +170,7 @@ void cpu_move(Player *bot, Domino_piece *table) {
     if(piece.side == LEFT_SIDE) printf("DEBUG: Bot has decided to use piece %d on LEFT side\n", piece.npiece);
     if(piece.side == RIGHT_SIDE) printf("DEBUG: Bot has decided to use piece %d on RIGHT side\n", piece.npiece);
 
-    use_piece(bot, table, piece.npiece, piece.side);
+    //use_piece(bot, table, piece.npiece, piece.side);
 
     printf("Printing new table\n");
     print_table(table);

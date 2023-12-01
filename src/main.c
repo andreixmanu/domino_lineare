@@ -10,6 +10,7 @@
 //either side has a number from 0 to 6
 
 int main(){
+    setbuf(stdout, NULL); //disable stdout buffering
     srand(time(NULL));
     view_menu();
     return 0;

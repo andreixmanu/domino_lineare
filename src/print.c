@@ -13,6 +13,7 @@ void print_table(Domino_piece *table) {
         printf("Table is empty\n");
         return;
     }
+
     int i = 0;
     Domino_piece *current_node = table;
     while (current_node != NULL) {
@@ -20,10 +21,10 @@ void print_table(Domino_piece *table) {
         current_node = current_node->next;
         i++;
     }
+
     printf("\n");
     printf("DEBUG: Table contains %d pieces\n", i);
 }
-
 
 void print_player(Player player) {
     //printf("printing player\n");

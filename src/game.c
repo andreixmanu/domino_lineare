@@ -36,7 +36,7 @@ Domino_piece *get_player_piece(Player *player, int n) {
 Domino_piece *get_table_piece(Domino_piece *table, int n) {
     //traverse table and return n-th piece
     Domino_piece *current_node = table;
-    for (int i = 0; i < n && current_node != NULL; i++)
+    for (int i = 1; i < n && current_node != NULL; i++)
         current_node = current_node->next;
     return current_node;
 }
@@ -47,6 +47,7 @@ void append_piece(Domino_piece **table, Domino_piece* piece) {
     piece_clone->left_side = piece->left_side;
     piece_clone->right_side = piece->right_side;
     piece_clone->next = NULL;
+    piece_clone->previous = NULL;
 
     if (*table == NULL) {
         *table = piece_clone;
@@ -58,7 +59,6 @@ void append_piece(Domino_piece **table, Domino_piece* piece) {
         current_node->next = piece_clone;
         piece_clone->previous = current_node;
     }
-    printf("DEBUG: Appended piece: %d|%d\n", piece_clone->left_side, piece_clone->right_side);
 }
 
 void prepend_piece(Domino_piece **table, Domino_piece* piece) {
@@ -163,12 +163,10 @@ int check_move(Domino_piece* piece,  Domino_piece *table, int side) {
     return MOVE_NOT_ALLOWED;
 }
 
-
 void use_piece(Domino_piece* piece, Domino_piece* table, int side) {
 
     //printf("DEBUG: Piece being used: %d|%d\n", piece->left_side, piece->right_side);
     if(table == NULL){
-        printf("DEBUG: Table is empty, appending first piece\n");
         append_piece(&table, piece);
     } else {
         // Check if the move is allowed
@@ -212,12 +210,12 @@ void singleplayer(int pieces, Domino_piece* table) {
         int piece;
         scanf("%d", &piece);
         Domino_piece* used_piece = get_player_piece(&player, piece);
-        //printf("DEBUG: Chosen piece: %d|%d\n", used_piece->left_side, used_piece->right_side);
 
         //append first piece
         if (table == NULL) {
             use_piece(used_piece, table, RIGHT_SIDE);
-            print_table(table);
+            //now the table should NOT be NULL
+            print_table(table); //table now is null
             continue;
         } else { //append / prepend next piece
             printf("Where do you want to place it? (Left :0, Right: 1)\n");

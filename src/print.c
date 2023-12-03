@@ -8,7 +8,8 @@
 #include "../include/game.h"
 
 
-void print_table(Domino_piece *table) {
+void print_table(Domino_piece* table) {
+    printf("DEBUG: Inside print_table: printing table address %p\n", table);
     if (table == NULL) {
         printf("Table is empty\n");
         return;
@@ -16,6 +17,7 @@ void print_table(Domino_piece *table) {
 
     int i = 0;
     Domino_piece *current_node = table;
+    printf("DEBUG: Inside print_table: printing node at address %p\n", current_node);
     while (current_node != NULL) {
         printf("%d|%d ", current_node->left_side, current_node->right_side);
         current_node = current_node->next;

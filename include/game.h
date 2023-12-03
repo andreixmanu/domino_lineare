@@ -27,7 +27,7 @@ Player create_player();
 
 int check_move(Domino_piece* piece, Domino_piece *table, int side);
 
-void use_piece(Domino_piece* piece, Domino_piece *table, int side);
+void use_piece(Domino_piece* piece, Domino_piece* table, int side);
 
 void singleplayer(int pieces, Domino_piece* table);
 

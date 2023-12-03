@@ -6,39 +6,37 @@
 #include <stdio.h>
 #include "../include/view_menu.h"
 #include "../include/game.h"
+#include <stdlib.h>
 
 
 void print_table(Domino_piece* table) {
-    printf("DEBUG: Inside print_table: printing table address %p\n", table);
     if (table == NULL) {
         printf("Table is empty\n");
         return;
     }
-
     int i = 0;
     Domino_piece *current_node = table;
-    printf("DEBUG: Inside print_table: printing node at address %p\n", current_node);
     while (current_node != NULL) {
-        printf("%d|%d ", current_node->left_side, current_node->right_side);
+        printf("[%d|%d] ", current_node->left_side, current_node->right_side);
         current_node = current_node->next;
         i++;
     }
-
     printf("\n");
-    printf("DEBUG: Table contains %d pieces\n", i);
+    //printf("DEBUG: Table contains %d pieces\n", i);
 }
 
-void print_player(Player player) {
+void print_player(Player* player) {
     //printf("printing player\n");
-    if (player.first_piece == NULL) {
+    if (player->first_piece == NULL) {
         printf("Player has no pieces, assigning now.\n");
-        assign_pieces(&player, 7);
-        print_player(player);
+        //assign_pieces(player, 7);
+        //print_player(player);
+        exit(10);
     }
     int i = 1;
-    Domino_piece *current_node = player.first_piece;
+    Domino_piece *current_node = player->first_piece;
     while (current_node != NULL) {
-        printf("%d: %d|%d\n",i, current_node->left_side, current_node->right_side);
+        printf("%d: [%d|%d]\n",i, current_node->left_side, current_node->right_side);
         current_node = current_node->next;
         i++;
     }
@@ -46,6 +44,7 @@ void print_player(Player player) {
 }
 
 void print_rules(){
+
     printf("\tThe game is played by two players. Each player has 7 domino pieces.\n"
            "\tThe first player is chosen randomly. The first player puts a domino piece on the table.\n"
            "\tThe second player puts a domino piece on the table.\n"
@@ -57,6 +56,7 @@ void print_rules(){
            "\tIf a player doesn't have a domino piece that can be put on the table, he draws a domino piece from the table.\n"
            "\tIf the table is empty, the player draws a domino piece from the table.\n"
            "\tIf the player doesn't have a domino piece that can be put on the table and the table is empty, the player passes.\n"
-           "\tIf both players pass, the game ends.\n\n");
+           "\tIf both players pass, the game ends.\n");
+
     view_menu();
 }

@@ -8,7 +8,7 @@
 #define DOMINO_LINEARE_PRINT_H
 
 void print_table(Domino_piece* table);
-void print_player(Player player);
+void print_player(Player* player);
 void print_rules();
 
 #endif //DOMINO_LINEARE_PRINT_H

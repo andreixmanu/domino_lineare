@@ -18,7 +18,7 @@ add_executable(
 )
 
 # Locate the Ncurses library
-# find_package(Curses REQUIRED)
+find_package(Curses REQUIRED)
 
 # Link your program with the Ncurses library
-# target_link_libraries(domino_lineare ${CURSES_LIBRARIES})
+target_link_libraries(domino_lineare ${CURSES_LIBRARIES})

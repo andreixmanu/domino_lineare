@@ -4,14 +4,12 @@
 
 #include "../include/view_menu.h"
 #include "../include/game.h"
-#include "../include/view_menu.h"
 #include "../include/print.h"
 #include <stdio.h>
+#include "../include/main.h"
 
+void view_menu() {
 
-void view_menu(){
-
-    //variables
     int option = 0;
 
     printf("Welcome to Domino Lineare!\n");
@@ -40,4 +38,3 @@ void view_menu(){
             break;
     }
 }
-

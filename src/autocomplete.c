@@ -163,7 +163,7 @@ Id_piece stupid_move(Domino_piece* table, Player* bot) {
 
 void cpu_move(Player *bot, Domino_piece *table) {
     printf("Bot's pieces:\n");
-    print_player(*bot);
+    print_player(bot);
 
     //printf("DEBUG: Now deciding piece\n");
     Id_piece piece = stupid_move(table, bot);

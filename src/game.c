@@ -18,6 +18,20 @@ Domino_piece *create_table() {
     return NULL;
 }
 
+int calculate_score(Domino_piece* table){
+    int score = 0;
+    if(table == NULL){
+        printf("DEBUG: inside calculate_score table is NULL\n");
+        exit(EXIT_FAILURE);
+    }
+    Domino_piece* current_node = table;
+    while(current_node != NULL){
+        score += (current_node->left_side + current_node->right_side);
+        current_node = current_node->next;
+    }
+    return score;
+}
+
 Domino_piece *get_player_piece(Player *player, int n) {
     // Check if player and first_piece are not null
     if (player == NULL || player->first_piece == NULL) {
@@ -163,38 +177,38 @@ int check_move(Domino_piece* piece,  Domino_piece *table, int side) {
     return MOVE_NOT_ALLOWED;
 }
 
-void use_piece(Domino_piece* piece, Domino_piece* table, int side) {
+void use_piece(Domino_piece* piece, Domino_piece** table, int side) {
 
     //printf("DEBUG: Piece being used: %d|%d\n", piece->left_side, piece->right_side);
-    if(table == NULL){
-        append_piece(&table, piece);
+    if(*table == NULL){
+        append_piece(table, piece);
     } else {
         // Check if the move is allowed
-        if (check_move(piece, table, side)) {
+        if (check_move(piece, *table, side)) {
             if (side == RIGHT_SIDE) {
-                append_piece(&table, piece);
+                append_piece(table, piece);
             } else if (side == LEFT_SIDE) {
-                prepend_piece(&table, piece);
+                prepend_piece(table, piece);
             } else {
                 printf("Side neither LEFT_SIDE nor RIGHT_SIDE\n");
                 exit(EXIT_FAILURE);
             }
         } else {
             printf("Move not allowed.\n");
-            exit(EXIT_FAILURE);
+            return;
         }
     }
 
     // Remove used piece from player
-    if (piece->previous == NULL) {
-        piece->next->previous = NULL;
-    } else if (piece->next == NULL) {
-        piece->previous->next = NULL;
-    } else {
+// Remove used piece from player
+    if (piece->previous != NULL && piece->next != NULL) {
         piece->previous->next = piece->next;
         piece->next->previous = piece->previous;
+    } else if(piece->previous != NULL) {
+        piece->previous->next = NULL;
+    } else if(piece->next != NULL) {
+        piece->next->previous = NULL;
     }
-    free(piece);
 }
 
 void singleplayer(int pieces, Domino_piece* table) {
@@ -204,16 +218,21 @@ void singleplayer(int pieces, Domino_piece* table) {
     while (player.first_piece != NULL) {
 
         printf("\nYour pieces:\n");
-        print_player(player);
+        print_player(&player);
 
         printf("Which piece do you want to place?\n");
+        printf("Press 0 to quit if you can't place any piece\n");
         int piece;
         scanf("%d", &piece);
+        if(piece == 0){
+            printf("Match ended, score is %d", calculate_score(table));
+            exit(EXIT_SUCCESS);
+        }
         Domino_piece* used_piece = get_player_piece(&player, piece);
 
         //append first piece
         if (table == NULL) {
-            use_piece(used_piece, table, RIGHT_SIDE);
+            use_piece(used_piece, &table, RIGHT_SIDE);
             //now the table should NOT be NULL
             print_table(table); //table now is null
             continue;
@@ -223,16 +242,16 @@ void singleplayer(int pieces, Domino_piece* table) {
             scanf("%d", &side);
 
             if (side == LEFT_SIDE) {
-                printf("DEBUG: Using piece on the left side...\n");
-                use_piece(used_piece, table, LEFT_SIDE);
+                //printf("DEBUG: Using piece on the left side...\n");
+                use_piece(used_piece, &table, LEFT_SIDE);
             } else if (side == RIGHT_SIDE) {
-                printf("DEBUG: Using piece on the right side...\n");
-                use_piece(used_piece, table, RIGHT_SIDE);
+                //printf("DEBUG: Using piece on the right side...\n");
+                use_piece(used_piece, &table, RIGHT_SIDE);
             } else {
                 printf("Invalid side. Please choose 0 for left or 1 for right.\n");
                 continue;  // Add this line to continue the loop
             }
-            printf("DEBUG: After using piece...\n");
+            //printf("DEBUG: After using piece...\n");
         }
         print_table(table);
     }

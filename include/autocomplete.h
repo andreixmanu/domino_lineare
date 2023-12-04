@@ -12,10 +12,10 @@ typedef struct{
     int side;
 } Id_piece;
 
-void autocomplete(Player *bot, Domino_piece *table);
+void autocomplete_stupid(Player *bot, Domino_piece* table, int pieces);
 Domino_piece *get_first_table_piece(Domino_piece *table);
 Domino_piece *get_last_table_piece(Domino_piece *table);
 Id_piece decide_piece(Domino_piece* table, Player* bot);
-void cpu_move(Player *bot, Domino_piece *table);
+void autocomplete_smart(Player *bot, Domino_piece *table);
 
 #endif //DOMINO_LINEARE_AUTOCOMPLETE_H

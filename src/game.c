@@ -87,7 +87,7 @@ void prepend_piece(Domino_piece **table, Domino_piece* piece) {
         (*table)->previous = piece_clone;
     }
     *table = piece_clone;
-    printf("DEBUG: Prepended piece: %d|%d\n", piece_clone->left_side, piece_clone->right_side);
+    //printf("DEBUG: Prepended piece: %d|%d\n", piece_clone->left_side, piece_clone->right_side);
 }
 
 void assign_pieces(Player *player, int n) {
@@ -194,7 +194,7 @@ void use_piece(Domino_piece* piece, Domino_piece** table, int side) {
                 exit(EXIT_FAILURE);
             }
         } else {
-            printf("Move not allowed.\n");
+            //printf("Move not allowed.\n");
             return;
         }
     }
@@ -283,7 +283,7 @@ void init_game() {
         case 2: { // CPU mode
             Player bot = create_player();
             assign_pieces(&bot, pieces);
-            autocomplete(&bot, table);
+            autocomplete_stupid(&bot, table, pieces);
             break;
         }
         default:

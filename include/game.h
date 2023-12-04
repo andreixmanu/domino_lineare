@@ -11,6 +11,8 @@
 
 Domino_piece *create_table();
 
+int calculate_score(Domino_piece* table);
+
 Domino_piece *get_player_piece(Player *player, int n);
 
 Domino_piece *get_table_piece(Domino_piece *table, int n);

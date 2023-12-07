@@ -26,12 +26,14 @@ void print_table(Domino_piece* table) {
 }
 
 void print_player(Player* player) {
-    //printf("printing player\n");
+    if (player == NULL) {
+        printf("DEBUG: Player is null\n");
+        return;
+    }
     if (player->first_piece == NULL) {
         printf("Player has no pieces, assigning now.\n");
-        //assign_pieces(player, 7);
-        //print_player(player);
-        exit(10);
+        assign_pieces(player, 7);
+        print_player(player);
     }
     int i = 1;
     Domino_piece *current_node = player->first_piece;
@@ -45,18 +47,16 @@ void print_player(Player* player) {
 
 void print_rules(){
 
-    printf("\tThe game is played by two players. Each player has 7 domino pieces.\n"
-           "\tThe first player is chosen randomly. The first player puts a domino piece on the table.\n"
-           "\tThe second player puts a domino piece on the table.\n"
-           "\tThe player who puts the domino piece with the highest sum of the numbers on the domino piece wins the round.\n"
-           "\tThe player who wins the round gets a point.\n"
-           "\tThe player who has the most points at the end of the game wins.\n"
-           "\tIf the sum of the numbers on the domino pieces is equal, the player who put the domino piece first wins the round.\n"
-           "\tIf the sum of the numbers on the domino pieces is equal and the domino pieces are the same, the round is a draw.\n"
-           "\tIf a player doesn't have a domino piece that can be put on the table, he draws a domino piece from the table.\n"
-           "\tIf the table is empty, the player draws a domino piece from the table.\n"
-           "\tIf the player doesn't have a domino piece that can be put on the table and the table is empty, the player passes.\n"
-           "\tIf both players pass, the game ends.\n");
+    printf("\tYou can chose to play or to let the CPU play with its own pieces.\n"
+           "\tYou have a chosen number of pieces, and each piece has two sides.\n"
+           "\tPlace a piece on the table, and the next pieces to be placed must \n"
+           "\thave the side adjacent to the piece on the table equal.\n"
+           "\tYou can place pieces only to the right or left of the table.\n"
+           "\tIf you can't place any piece you call the end of the game, and the\n"
+           "\tscore get calculated.\n"
+           "\tThe score is calculated by adding the two sides of each piece on the\n"
+           "\ttable.\n"
+           "\tThe same rules apply to the CPU.\n");
 
     view_menu();
 }

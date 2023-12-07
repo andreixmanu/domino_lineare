@@ -15,10 +15,11 @@ add_executable(
                 include/main.h
                 include/autocomplete.h
                 src/autocomplete.c
+                src/matrix.c
 )
 
 # Locate the Ncurses library
-find_package(Curses REQUIRED)
+# find_package(Curses REQUIRED)
 
 # Link your program with the Ncurses library
-target_link_libraries(domino_lineare ${CURSES_LIBRARIES})
+# target_link_libraries(domino_lineare ${CURSES_LIBRARIES})

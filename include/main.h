@@ -5,12 +5,23 @@
 #ifndef DOMINO_LINEARE_MAIN_H
 #define DOMINO_LINEARE_MAIN_H
 
+#define HORIZONTAL 0
+#define VERTICAL 1
+
+typedef struct box Box;
+struct box{
+    int value;
+    Box* other_box;
+};
+
 typedef struct dominio_piece Domino_piece;
 struct dominio_piece {
-    int left_side;
-    int right_side;
+    int orientation;
+    Box left_side;
+    Box right_side;
     Domino_piece *next;
     Domino_piece *previous;
+    Box* downside;
 };
 
 typedef struct player Player;

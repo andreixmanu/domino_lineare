@@ -23,8 +23,8 @@ void view_menu() {
     switch (option) {
         case 1:
             printf("Select gamemode:\n"
-                   "Linear Domino\n"
-                   "2D Domino\n");
+                   "\t1. Linear Domino\n"
+                   "\t2. 2D Domino\n");
             int gamemode;
             scanf("%d", &gamemode);
             (gamemode == 1) ? init_game() : not_linear_domino();

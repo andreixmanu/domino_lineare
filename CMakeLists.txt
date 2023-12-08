@@ -18,6 +18,7 @@ add_executable(
         src/2D_Domino/2D_gamemode.c
         src/2D_Domino/2D_autocomplete.c
         src/2D_Domino/2D_print.c
+        include/2D_print.h
 )
 
 # Locate the Ncurses library

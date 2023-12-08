@@ -2,12 +2,13 @@
 // Created by andreixmanu on 28/10/23.
 //
 
-#include "../include/game.h"
-#include "../include/print.h"
+#include "include/game.h"
+#include "include/print.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include "../include/autocomplete.h"
-#include "../include/main.h"
+#include "include/autocomplete.h"
+#include "include/main.h"
+#include "include/2D_gamemode.h"
 
 #define LEFT_SIDE 0
 #define RIGHT_SIDE 1
@@ -27,7 +28,7 @@ int calculate_score(Domino_piece *table) {
     }
     Domino_piece *current_node = table;
     while (current_node != NULL) {
-        score += (current_node->left_side.value + current_node->right_side.value);
+        score += (current_node->left_side + current_node->right_side);
         current_node = current_node->next;
     }
     return score;
@@ -56,50 +57,14 @@ Domino_piece *get_table_piece(Domino_piece *table, int n) {
     return current_node;
 }
 
-void append_vertical_piece(Domino_piece **table, Domino_piece *piece, int side) {
-    Domino_piece *piece_clone = (Domino_piece *) malloc(sizeof(Domino_piece));
-
-    piece_clone->orientation = VERTICAL;
-    piece_clone->left_side.value = piece->left_side.value;
-    piece_clone->left_side.other_box = &piece_clone->right_side;
-    piece_clone->right_side.value = piece->right_side.value;
-    piece_clone->right_side.other_box = &piece_clone->left_side;
-    piece_clone->next = NULL;
-    piece_clone->previous = NULL;
-
-    if (side == LEFT_SIDE) piece_clone->downside = &piece_clone->left_side;
-    if (side == RIGHT_SIDE) piece_clone->downside = &piece_clone->right_side;
-    //TODO finish function
-}
-
-void prepend_vertical_piece(Domino_piece **table, Domino_piece *piece, int side) {
-    Domino_piece *piece_clone = (Domino_piece *) malloc(sizeof(Domino_piece));
-
-    piece_clone->orientation = VERTICAL;
-    piece_clone->left_side.value = piece->left_side.value;
-    piece_clone->left_side.other_box = &piece_clone->right_side;
-    piece_clone->right_side.value = piece->right_side.value;
-    piece_clone->right_side.other_box = &piece_clone->left_side;
-    piece_clone->next = NULL;
-    piece_clone->previous = NULL;
-
-    if (side == LEFT_SIDE) piece_clone->downside = &piece_clone->left_side;
-    if (side == RIGHT_SIDE) piece_clone->downside = &piece_clone->right_side;
-    //TODO finish function
-}
-
 void append_piece(Domino_piece **table, Domino_piece *piece) {
 
     Domino_piece *piece_clone = (Domino_piece *) malloc(sizeof(Domino_piece));
 
-    piece_clone->orientation = HORIZONTAL;
-    piece_clone->left_side.value = piece->left_side.value;
-    piece_clone->left_side.other_box = &piece_clone->right_side;
-    piece_clone->right_side.value = piece->right_side.value;
-    piece_clone->right_side.other_box = &piece_clone->left_side;
+    piece_clone->left_side = piece->left_side;
+    piece_clone->right_side = piece->right_side;
     piece_clone->next = NULL;
     piece_clone->previous = NULL;
-    piece_clone->downside = NULL;
 
     if (*table == NULL) {
         *table = piece_clone;
@@ -111,19 +76,16 @@ void append_piece(Domino_piece **table, Domino_piece *piece) {
         current_node->next = piece_clone;
         piece_clone->previous = current_node;
     }
+
 }
 
 void prepend_piece(Domino_piece **table, Domino_piece *piece) {
     Domino_piece *piece_clone = (Domino_piece *) malloc(sizeof(Domino_piece));
 
-    piece_clone->orientation = HORIZONTAL;
-    piece_clone->left_side.value = piece->left_side.value;
-    piece_clone->left_side.other_box = &piece_clone->right_side;
-    piece_clone->right_side.value = piece->right_side.value;
-    piece_clone->right_side.other_box = &piece_clone->left_side;
+    piece_clone->left_side = piece->left_side;
+    piece_clone->right_side = piece->right_side;
     piece_clone->next = NULL;
     piece_clone->previous = NULL;
-    piece_clone->downside = NULL;
 
     if (*table != NULL) {
         (*table)->previous = piece_clone;
@@ -166,11 +128,10 @@ void assign_pieces(Player *player, int n) {
             exit(EXIT_FAILURE);
         }
 
-        new_node->left_side.value = possible_pieces[random_number][0];
-        new_node->right_side.value = possible_pieces[random_number][1];
+        new_node->left_side = possible_pieces[random_number][0];
+        new_node->right_side = possible_pieces[random_number][1];
         new_node->next = NULL;
         new_node->previous = NULL;
-        new_node->downside = NULL;
 
         if (player->first_piece == NULL) {
             player->first_piece = new_node;
@@ -208,9 +169,9 @@ int check_move(Domino_piece *piece, Domino_piece *table, int side) {
         //printf(" with player piece: %d|%d\n", current_node->left_side, current_node->right_side);
         //printf("DEBUG: Checking player number %d with table number %d\n", current_node->left_side, table->right_side);
 
-        if (last_table_node->right_side.value == piece->left_side.value) {
+        if (last_table_node->right_side == piece->left_side) {
             return MOVE_ALLOWED;
-        } else if (last_table_node->right_side.value != piece->left_side.value) {
+        } else if (last_table_node->right_side != piece->left_side) {
             return MOVE_NOT_ALLOWED;
         } else exit(EXIT_FAILURE);
 
@@ -220,9 +181,9 @@ int check_move(Domino_piece *piece, Domino_piece *table, int side) {
         //printf(" with table piece %d|%d\n", table->left_side, table->right_side);
         //printf("DEBUG: Checking player number %d with table number %d\n", current_node->right_side, table->left_side);
 
-        if (table->left_side.value == piece->right_side.value) {
+        if (table->left_side == piece->right_side) {
             return MOVE_ALLOWED;
-        } else if (table->left_side.value != piece->right_side.value) {
+        } else if (table->left_side != piece->right_side) {
             return MOVE_NOT_ALLOWED;
         } else exit(33);
 
@@ -283,6 +244,10 @@ void singleplayer(int pieces, Domino_piece *table) {
             exit(EXIT_SUCCESS);
         }
         Domino_piece *used_piece = get_player_piece(&player, piece);
+
+        printf("Place horizontally or vertically? (0 for horizontal, 1 for vertical)\n");
+        int orientation;
+        scanf("%d", &orientation);
 
         //append first piece
         if (table == NULL) {

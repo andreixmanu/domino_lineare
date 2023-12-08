@@ -9,13 +9,15 @@ include_directories(src)
 add_executable(
                 ${PROJECT_NAME}
                 src/main.c
-                src/view_menu.c
-                src/print.c
-                src/game.c
+        src/Linear_Domino/view_menu.c
+        src/Linear_Domino/print.c
+        src/Linear_Domino/game.c
                 include/main.h
                 include/autocomplete.h
-                src/autocomplete.c
-                src/matrix.c
+        src/Linear_Domino/autocomplete.c
+        src/2D_Domino/2D_gamemode.c
+        src/2D_Domino/2D_autocomplete.c
+        src/2D_Domino/2D_print.c
 )
 
 # Locate the Ncurses library

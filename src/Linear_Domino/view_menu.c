@@ -2,11 +2,12 @@
 // Created by andreixmanu on 25/10/23.
 //
 
-#include "../include/view_menu.h"
-#include "../include/game.h"
-#include "../include/print.h"
+#include "include/view_menu.h"
+#include "include/game.h"
+#include "include/print.h"
 #include <stdio.h>
-#include "../include/main.h"
+#include "include/2D_gamemode.h"
+#include <stdlib.h>
 
 void view_menu() {
 
@@ -21,17 +22,20 @@ void view_menu() {
 
     switch (option) {
         case 1:
-            printf("Play\n");
-            //initiate game
-            init_game();
+            printf("Select gamemode:\n"
+                   "Linear Domino\n"
+                   "2D Domino\n");
+            int gamemode;
+            scanf("%d", &gamemode);
+            (gamemode == 1) ? init_game() : not_linear_domino();
             break;
         case 2:
-            printf("Rules\n");
+            //printf("Rules\n");
             print_rules();
             break;
         case 3:
-            printf("Exit\n");
-            return;
+            //printf("Exit\n");
+            exit(EXIT_SUCCESS);
         default:
             printf("Invalid option\n");
             view_menu();

@@ -2,10 +2,10 @@
 // Created by andreixmanu on 28/10/23.
 //
 
-#include "../include/main.h"
+#include "include/main.h"
 #include <stdio.h>
-#include "../include/view_menu.h"
-#include "../include/game.h"
+#include "include/view_menu.h"
+#include "include/game.h"
 #include <stdlib.h>
 
 

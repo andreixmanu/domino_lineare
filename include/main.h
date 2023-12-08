@@ -8,20 +8,13 @@
 #define HORIZONTAL 0
 #define VERTICAL 1
 
-typedef struct box Box;
-struct box{
-    int value;
-    Box* other_box;
-};
 
 typedef struct dominio_piece Domino_piece;
 struct dominio_piece {
-    int orientation;
-    Box left_side;
-    Box right_side;
+    int left_side;
+    int right_side;
     Domino_piece *next;
     Domino_piece *previous;
-    Box* downside;
 };
 
 typedef struct player Player;

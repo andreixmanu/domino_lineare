@@ -2,10 +2,10 @@
 // Created by manua on 30/10/2023.
 //
 
-#include "../include/main.h"
-#include "../include/print.h"
-#include "../include/game.h"
-#include "../include/autocomplete.h"
+#include "include/main.h"
+#include "include/print.h"
+#include "include/game.h"
+#include "include/autocomplete.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -40,7 +40,7 @@ Id_piece decide_piece(Domino_piece *table, Player *bot) {
     int score = 0;
     Domino_piece *current_node = table;
     while (current_node != NULL) {
-        score += current_node->left_side.value + current_node->right_side.value;
+        score += current_node->left_side + current_node->right_side;
         current_node = current_node->next;
     }
 
@@ -49,17 +49,17 @@ Id_piece decide_piece(Domino_piece *table, Player *bot) {
     int piece_index = 0;
     while (current_piece != NULL) {
         // Prova a piazzare il pezzo a sinistra
-        int left_score = score + current_piece->left_side.value;
-        if (table->left_side.value == current_piece->right_side.value) {
-            left_score += table->left_side.value;
+        int left_score = score + current_piece->left_side;
+        if (table->left_side == current_piece->right_side) {
+            left_score += table->left_side;
             moveExists = true;
         }
 
         // Prova a piazzare il pezzo a destra solo se esiste un pezzo nel tavolo
-        int right_score = score + current_piece->right_side.value;
+        int right_score = score + current_piece->right_side;
         if (get_last_table_piece(table) != NULL &&
-            get_last_table_piece(table)->right_side.value == current_piece->left_side.value) {
-            right_score += current_piece->left_side.value;
+            get_last_table_piece(table)->right_side == current_piece->left_side) {
+            right_score += current_piece->left_side;
             moveExists = true;
         }
 
@@ -111,7 +111,7 @@ Id_piece stupid_move(Domino_piece *table, Player *bot) {
     if (returning_piece.side == LEFT_SIDE) {
         Domino_piece *first_piece = get_first_table_piece(table);
         while (temp != NULL) {
-            if (first_piece->left_side.value == temp->right_side.value) {
+            if (first_piece->left_side == temp->right_side) {
                 returning_piece.npiece = index++;
                 moveExists = true;
                 break;
@@ -122,7 +122,7 @@ Id_piece stupid_move(Domino_piece *table, Player *bot) {
     } else if (returning_piece.side == RIGHT_SIDE) {
         Domino_piece *last_piece = get_last_table_piece(table);
         while (temp != NULL) {
-            if (last_piece->right_side.value == temp->left_side.value) {
+            if (last_piece->right_side == temp->left_side) {
                 returning_piece.npiece = index++;
                 moveExists = true;
                 break;
@@ -146,7 +146,7 @@ Id_piece stupid_move(Domino_piece *table, Player *bot) {
         if (returning_piece.side == LEFT_SIDE) {
             Domino_piece *other_piece = get_last_table_piece(table);
             while (temp2 != NULL) {
-                if (other_piece->right_side.value == temp2->left_side.value) {
+                if (other_piece->right_side == temp2->left_side) {
                     returning_piece.npiece = index++;
                     moveExists = true;
                     break;
@@ -157,7 +157,7 @@ Id_piece stupid_move(Domino_piece *table, Player *bot) {
         } else if (returning_piece.side == RIGHT_SIDE) {
             Domino_piece *other_first_piece = get_first_table_piece(table);
             while (temp2 != NULL) {
-                if (other_first_piece->left_side.value == temp2->right_side.value) {
+                if (other_first_piece->left_side == temp2->right_side) {
                     returning_piece.npiece = index++;
                     moveExists = true;
                     break;

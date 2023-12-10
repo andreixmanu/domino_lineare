@@ -7,9 +7,15 @@
 #include "../include/2D_gamemode.h"
 
 void print_player_2D(Piece* player, int n) {
+    int j = 1;
     for (int i = 0; i < n; i++) {
-        if(player[i].left_side == -1 && player[i].right_side == -1) continue;
-        printf("\t%d: [%d|%d]\n", i+1, player[i].left_side, player[i].right_side);
+        // Skip the pieces that are empty
+        if(player[i].left_side == -1 && player[i].right_side == -1){
+            continue;
+        }
+        // Print the piece number (j) and its values
+        printf("\t%d: [%d|%d]\n", j, player[i].left_side, player[i].right_side);
+        j++;
     }
     printf("\n");
 }

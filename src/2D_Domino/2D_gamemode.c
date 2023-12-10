@@ -9,8 +9,8 @@
 
 #define MOVE_ALLOWED 1
 #define MOVE_NOT_ALLOWED 0
-#define LEFT_SIDE 0
-#define RIGHT_SIDE 1
+#define LEFT_SIDE 1
+#define RIGHT_SIDE 2
 
 Piece EMPTY_PIECE = {-1, -1};
 
@@ -74,6 +74,15 @@ Piece* create_player_2D(size_t n){
     return player;
 }
 
+int check_empty_player(Piece* player, int n) {
+    for (int i = 0; i < n; i++) {
+        if(player[i].left_side != -1 && player[i].right_side != -1) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
 //TODO check for border test cases
 int check_move_2D(Piece** table, Piece* piece, int side) {
     if(side == RIGHT_SIDE){
@@ -91,13 +100,37 @@ int check_move_2D(Piece** table, Piece* piece, int side) {
     return MOVE_NOT_ALLOWED;
 }
 
-void use_piece_2D(Piece** table, Piece* player, int piece, int side) {
-    // Subtract 1 from piece for 0-based numbering.
-    //piece--;
+int pick_piece_index(Piece* player, int n, int pickedIndex){
+    int j = 1;
+    for (int i = 0; i < n; i++) {
+        if(player[i].left_side == -1 && player[i].right_side == -1){
+            continue;
+        }
+        if(j == pickedIndex){
+            return i;
+        }
+        j++;
+    }
+    // when pickedIndex is outside the valid range
+    // return -1 or another sentinel value
+    return -1;
+}
+
+void use_piece_2D(Piece** table, Piece* player, int piece, int side, int num_player_pieces) {
+
+    int picked_piece_index = pick_piece_index(player, num_player_pieces, piece);
+    printf("Picked piece index: %d\n", picked_piece_index);
+
+    if(picked_piece_index == -1){
+        printf("Invalid piece. It's an empty piece or pickedIndex is out of range.\n");
+        return;
+    }
+
+    Piece selected_piece = player[picked_piece_index];
 
     if (table[0][10].left_side == -1 && table[0][10].right_side == -1) {
-        table[0][10] = player[piece];
-        player[piece] = EMPTY_PIECE;
+        table[0][10] = selected_piece;
+        player[picked_piece_index] = EMPTY_PIECE;
         return;
     }
 
@@ -105,38 +138,73 @@ void use_piece_2D(Piece** table, Piece* player, int piece, int side) {
     int last_valid_index = last_piece_2d(table[0], 20);
 
     if(side == LEFT_SIDE && first_valid_index != -1) {
-        if(check_move_2D(table, &player[piece], LEFT_SIDE)){
-            table[0][first_valid_index - 1] = player[piece];
-            player[piece] = EMPTY_PIECE;
+        if(check_move_2D(table, &selected_piece, LEFT_SIDE)){
+            table[0][first_valid_index - 1] = selected_piece;
+            player[picked_piece_index] = EMPTY_PIECE;
+            return;
         }
     }
 
     if(side == RIGHT_SIDE && last_valid_index != -1) {
-        if(check_move_2D(table, &player[piece], RIGHT_SIDE)){
-            table[0][last_valid_index + 1] = player[piece];
-            player[piece] = EMPTY_PIECE;
+        if(check_move_2D(table, &selected_piece, RIGHT_SIDE)){
+            table[0][last_valid_index + 1] = selected_piece;
+            player[picked_piece_index] = EMPTY_PIECE;
+            return;
         }
+    }
+    printf("Invalid move.\n");
+}
+
+void remove_piece(Piece* player, int n, int removeIndex){
+    int j = 1;
+    for (int i = 0; i < n; i++) {
+        if(player[i].left_side == -1 && player[i].right_side == -1){
+            continue;
+        }
+        if(j == removeIndex){
+            player[i] = (Piece){-1, -1};  // Set the piece as empty
+            return;
+        }
+        j++;
     }
 }
 
 void singleplayer_2D(Piece** table, int pieces) {
     Piece* player = create_player_2D(pieces);
     assign_pieces_2D(player, pieces);
+
+    //first piece
     printf("Player's pieces:\n");
     print_player_2D(player, pieces);
 
-    while(player[0].left_side != -1 && player[0].right_side != -1){
+    printf("Choose a piece to play:\n");
+    int piece;
+    scanf("%d", &piece);
+
+    use_piece_2D(table, player, piece - 1, 0, pieces);
+    printf("Table:\n");
+    print_table_2D(table, 1, 20);
+
+    while(!check_empty_player(player, pieces)) {
+
+        printf("Player's pieces:\n");
+        print_player_2D(player, pieces);
 
         printf("Choose a piece to play:\n");
-        int piece;
-        scanf("%d", &piece);
+        int piece2;
+        scanf("%d", &piece2);
 
-        // Substract 1 from piece for 0-based numbering
-        use_piece_2D(table, player, piece - 1, 0);
+        printf("Choose a side to play:\n");
+        printf("1. Left\n"
+               "2. Right\n");
+        int side;
+        scanf("%d", &side);
+
+
+        use_piece_2D(table, player, piece - 1, side, pieces);
         printf("Table:\n");
         print_table_2D(table, 1, 20);
     }
-
     exit(0);
 }
 
@@ -146,7 +214,6 @@ Piece** create_matrix() {
         // Handle memory allocation failure
         exit(1);
     }
-
     for (size_t i = 0; i < 20; i++) {
         matrix[i] = malloc(20 * sizeof(Piece));
         if (matrix[i] == NULL) {
@@ -174,7 +241,7 @@ void not_linear_domino() {
     scanf("%d", &gameMode);
     switch (gameMode) {
         case 1: // Singleplayer
-            printf("Singleplayer\n");
+            //printf("Singleplayer\n");
             singleplayer_2D(matrix, pieces);
             break;
         case 2: // CPU mode

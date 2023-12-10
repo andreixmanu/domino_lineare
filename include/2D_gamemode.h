@@ -11,6 +11,8 @@ struct piece {
     int right_side;
 };
 
+int calculate_score_2D(Piece** table);
+
 void assign_pieces_2D(Piece* player, int n);
 
 Piece* create_player_2D(size_t n);
@@ -25,11 +27,11 @@ int last_piece_2d(Piece* row, int cols);
 
 int pick_piece_index(Piece* player, int n, int pickedIndex);
 
-void use_piece_2D(Piece** table, Piece* player, int piece, int side, int num_player_pieces);
+void use_piece_2D(Piece** table, Piece* player, int piece, int side, int* player_size);
 
-void remove_piece(Piece* player, int n, int removeIndex);
+void remove_piece_2D(Piece* player, int* size, int index);
 
-void singleplayer_2D(Piece** matrix, int pieces);
+void singleplayer_2D(Piece** matrix, int* player_size);
 
 Piece** create_matrix();
 

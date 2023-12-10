@@ -20,6 +20,13 @@ void print_player_2D(Piece* player, int n) {
     printf("\n");
 }
 
+void print_player_2D_DEBUG(Piece* player, int n) {
+    for (int i = 0; i < n; i++) {
+        printf("\t%d: [%d|%d]\n", i+1, player[i].left_side, player[i].right_side);
+    }
+    printf("\n");
+}
+
 void print_table_2D(Piece** table, int rows, int cols) {
     for (int i = 0; i < rows; i++) {
         printf("\t");

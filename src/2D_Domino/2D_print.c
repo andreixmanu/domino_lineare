@@ -13,3 +13,18 @@ void print_player_2D(Piece* player, int n) {
     }
     printf("\n");
 }
+
+void print_table_2D(Piece** table, int rows, int cols) {
+    for (int i = 0; i < rows; i++) {
+        printf("\t");
+        for (int j = 0; j < cols; j++) {
+            if(table[i][j].left_side == -1 && table[i][j].right_side == -1) {
+                printf("     ");
+                continue;
+            }
+            printf("[%d|%d]", table[i][j].left_side, table[i][j].right_side);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}

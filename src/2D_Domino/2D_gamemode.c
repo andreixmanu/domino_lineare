@@ -48,7 +48,7 @@ void assign_pieces_2D(Piece* player, int n){
 }
 
 int first_piece_2D(Piece* row, int cols) {
-    for (size_t i = 0; i < cols; i++) {
+    for (int i = 0; i < cols; i++) {
         if(!(row[i].left_side == -1 && row[i].right_side == -1)) {
             return i;
         }
@@ -92,6 +92,8 @@ int check_move_2D(Piece** table, Piece* piece, int side) {
 }
 
 void use_piece_2D(Piece** table, Piece* player, int piece, int side) {
+    // Subtract 1 from piece for 0-based numbering.
+    //piece--;
 
     if (table[0][10].left_side == -1 && table[0][10].right_side == -1) {
         table[0][10] = player[piece];
@@ -102,13 +104,14 @@ void use_piece_2D(Piece** table, Piece* player, int piece, int side) {
     int first_valid_index = first_piece_2D(table[0], 20);
     int last_valid_index = last_piece_2d(table[0], 20);
 
-    if(side == LEFT_SIDE && first_valid_index != -1){
+    if(side == LEFT_SIDE && first_valid_index != -1) {
         if(check_move_2D(table, &player[piece], LEFT_SIDE)){
             table[0][first_valid_index - 1] = player[piece];
             player[piece] = EMPTY_PIECE;
         }
     }
-    if(side == RIGHT_SIDE && last_valid_index != -1){
+
+    if(side == RIGHT_SIDE && last_valid_index != -1) {
         if(check_move_2D(table, &player[piece], RIGHT_SIDE)){
             table[0][last_valid_index + 1] = player[piece];
             player[piece] = EMPTY_PIECE;
@@ -128,7 +131,10 @@ void singleplayer_2D(Piece** table, int pieces) {
         int piece;
         scanf("%d", &piece);
 
-        use_piece_2D(table, player, piece, 0);
+        // Substract 1 from piece for 0-based numbering
+        use_piece_2D(table, player, piece - 1, 0);
+        printf("Table:\n");
+        print_table_2D(table, 1, 20);
     }
 
     exit(0);

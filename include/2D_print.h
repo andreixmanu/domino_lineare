@@ -7,5 +7,6 @@
 #define DOMINO_LINEARE_2D_PRINT_H
 
 void print_player_2D(Piece* player, int n);
+void print_table_2D(Piece** table, int rows, int cols);
 
 #endif //DOMINO_LINEARE_2D_PRINT_H

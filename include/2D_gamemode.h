@@ -17,6 +17,8 @@ Piece* create_player_2D(size_t n);
 
 int first_piece_2D(Piece* row, int cols);
 
+int check_move_2D(Piece** table, Piece* piece, int side);
+
 int last_piece_2d(Piece* row, int cols);
 
 void use_piece_2D(Piece** table, Piece* player, int piece, int side);

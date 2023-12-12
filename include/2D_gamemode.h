@@ -19,6 +19,8 @@ Piece* create_player_2D(size_t n);
 
 int first_piece_2D(Piece* row, int cols);
 
+void switch_values_2D(Piece* player, int player_size);
+
 int check_empty_player(Piece* player, int n);
 
 int check_move_2D(Piece** table, Piece* piece, int side);

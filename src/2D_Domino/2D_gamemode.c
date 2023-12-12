@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include "../include/2D_gamemode.h"
 #include "../include/2D_print.h"
+#include <ctype.h>
 
 #define MOVE_ALLOWED 1
 #define MOVE_NOT_ALLOWED 0
@@ -186,6 +187,19 @@ void remove_piece_2D(Piece* player, int* size, int index) {
     printf("DEBUG: Player size after removal: %d\n", *size);
 }
 
+void switch_values_2D(Piece* player, int player_size){
+    printf("What piece do you want to switch?\n");
+    int option;
+    scanf("%d", &option);
+    int index = pick_piece_index(player, player_size, option - 1);  // -1 if option is 1-based
+    if (index == -1) {
+        printf("Invalid option.\n");
+        return;
+    }
+    int temp = player[index].left_side;
+    player[index].left_side = player[index].right_side;
+    player[index].right_side = temp;
+}
 
 void singleplayer_2D(Piece** table, int* pieces) {
     Piece* player = create_player_2D(*pieces);
@@ -210,12 +224,18 @@ void singleplayer_2D(Piece** table, int* pieces) {
         print_player_2D(player, *pieces);
 
         printf("Choose a piece to play:\n"
-               "Press 0 to quit if you can't place any piece\n");
-        int piece2;
-        scanf("%d", &piece2);
-        if (piece2 == 0) {
+               "Press 0 to quit if you can't place any piece\n"
+               "Press s to switch two pieces' values\n");
+        char piece2;
+        scanf(" %c", &piece2);
+        if (piece2 == '0') {
             printf("Score is: %d\n", calculate_score_2D(table));
             exit(0);
+        }
+
+        if(piece2 == 's'){
+            switch_values_2D(player, *pieces);
+            continue;
         }
 
         printf("Choose a side to play:\n");
@@ -224,10 +244,17 @@ void singleplayer_2D(Piece** table, int* pieces) {
         int side;
         scanf("%d", &side);
 
-        use_piece_2D(table, player, piece2 - 1, side, pieces);
-        printf("DEBUG: Player size: %d\n", *pieces);
-        printf("Table:\n");
-        print_table_2D(table, 1, 20);
+        //cast piece2 to an integer
+        if (isdigit(piece2)) {
+            int num_piece = piece2 - '0';
+            use_piece_2D(table, player, num_piece - 1, side, pieces);
+            printf("DEBUG: Player size: %d\n", *pieces);
+            printf("Table:\n");
+            print_table_2D(table, 1, 20);
+            continue;
+        }
+
+        printf("ERROR YOU SHOULD NOT BE HERE\n");
     }
 
     exit(0);
@@ -266,7 +293,6 @@ void not_linear_domino() {
     scanf("%d", &gameMode);
     switch (gameMode) {
         case 1: // Singleplayer
-            //printf("Singleplayer\n");
             singleplayer_2D(matrix, &pieces);
             break;
         case 2: // CPU mode

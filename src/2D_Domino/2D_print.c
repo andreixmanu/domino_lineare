@@ -29,13 +29,19 @@ void print_player_2D_DEBUG(Piece* player, int n) {
 
 void print_table_2D(Piece** table, int rows, int cols) {
     for (int i = 0; i < rows; i++) {
-        printf("\t");
+        //printf("\t");
         for (int j = 0; j < cols; j++) {
-            if(table[i][j].left_side == -1 && table[i][j].right_side == -1) {
+            if (table[i][j].left_side == -1 && table[i][j].right_side == -1) {
                 printf("     ");
                 continue;
             }
-            printf("[%d|%d]", table[i][j].left_side, table[i][j].right_side);
+            if (table[i][j].left_side == -1) {
+                printf("[%d]", table[i][j].right_side);
+            } else if (table[i][j].right_side == -1) {
+                printf("[%d]", table[i][j].left_side);
+            } else {
+                printf("[%d|%d]", table[i][j].left_side, table[i][j].right_side);
+            }
         }
         printf("\n");
     }

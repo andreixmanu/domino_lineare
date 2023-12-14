@@ -23,13 +23,13 @@ void switch_values_2D(Piece* player, int player_size);
 
 int check_empty_player(Piece* player, int n);
 
-int check_move_2D(Piece** table, Piece* piece, int side);
+int check_move_2D(Piece** table, Piece* piece, int side, int orientation);
 
 int last_piece_2d(Piece* row, int cols);
 
 int pick_piece_index(Piece* player, int n, int pickedIndex);
 
-void use_piece_2D(Piece** table, Piece* player, int piece, int side, int* player_size);
+void use_piece_2D(Piece** table, Piece* player, int piece, int side, int* player_size, int orientation);
 
 void remove_piece_2D(Piece* player, int* size, int index);
 

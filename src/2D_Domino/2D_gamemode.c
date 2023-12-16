@@ -101,42 +101,35 @@ int check_empty_player(Piece* player, int n) {
 
 //TODO check for border test cases
 int check_move_2D(Piece** table, Piece* piece, int side, int orientation) {
-    if(orientation == HORIZONTAL){
-        if(side == RIGHT_SIDE){
+    if (orientation == HORIZONTAL) {
+        if (side == RIGHT_SIDE) {
             int last_valid_index = last_piece_2d(table[0], 20);
-            if(table[0][last_valid_index].right_side == piece->left_side){
+            if (table[0][last_valid_index].right_side == piece->left_side) {
                 return MOVE_ALLOWED;
             }
-        }
-        if(side == LEFT_SIDE){
+        } else if (side == LEFT_SIDE) {
             int first_valid_index = first_piece_2D(table[0], 20);
-            if(table[0][first_valid_index].left_side == piece->right_side){
+            if (table[0][first_valid_index].left_side == piece->right_side) {
                 return MOVE_ALLOWED;
             }
         }
-        return MOVE_NOT_ALLOWED;
-    }
-    if(orientation == VERTICAL){
-        if(side == RIGHT_SIDE){
-           int last_valid_index = last_piece_2d(table[0], 20);
-              if(table[0][last_valid_index].right_side == piece->left_side){
+    } else if (orientation == VERTICAL) {
+        int row = last_piece_2d(*table, 20) + 1;
+        if (row < 20 && table[row][0].left_side == -1 && table[row][0].right_side == -1) {
+            // Valid row for vertical placement
+            if (side == LEFT_SIDE && table[row][0].left_side == piece->right_side) {
                 return MOVE_ALLOWED;
-              }
-        }
-        if(side == LEFT_SIDE){
-            int first_valid_index = first_piece_2D(table[0], 20);
-            if(table[0][first_valid_index].left_side == piece->right_side){
+            } else if (side == RIGHT_SIDE && table[row][0].right_side == piece->left_side) {
                 return MOVE_ALLOWED;
             }
         }
-        return MOVE_NOT_ALLOWED;
     }
-    return MOVE_ALLOWED;
+
+    return MOVE_NOT_ALLOWED;
 }
 
-
 int pick_piece_index(Piece* player, int player_size, int pickedIndex) {
-    int result_index = 0;  // Start from 0, not 1
+    int result_index = 0;
     for (int i = 0; i < player_size; i++) {
         if (player[i].left_side == -1 && player[i].right_side == -1) {
             continue;
@@ -146,12 +139,11 @@ int pick_piece_index(Piece* player, int player_size, int pickedIndex) {
         }
         result_index++;
     }
-    // when pickedIndex is outside the valid range
-    // return -1 or another sentinel value
     return -1;
 }
 
 void use_piece_2D(Piece** table, Piece* player, int piece, int side, int* player_size, int orientation) {
+
     if (orientation == HORIZONTAL) {
         int picked_piece_index = pick_piece_index(player, *player_size, piece);
 
@@ -186,10 +178,8 @@ void use_piece_2D(Piece** table, Piece* player, int piece, int side, int* player
                 return;
             }
         }
-
         printf("Invalid move.\n");
     }
-
     if (orientation == VERTICAL) {
         int picked_piece_index = pick_piece_index(player, *player_size, piece);
 
@@ -222,7 +212,6 @@ void use_piece_2D(Piece** table, Piece* player, int piece, int side, int* player
                 return;
             }
         }
-
         if (side == RIGHT_SIDE && last_valid_index != -1) {
             if (check_move_2D(table, &selected_piece, RIGHT_SIDE, VERTICAL)) {
                 table[last_valid_index + 1][0].left_side = -1;
@@ -233,27 +222,15 @@ void use_piece_2D(Piece** table, Piece* player, int piece, int side, int* player
                 return;
             }
         }
-
         printf("Invalid move.\n");
     }
 }
 
 
 void remove_piece_2D(Piece* player, int* size, int index) {
-
-    if (index < 0 || index >= *size) {
-        // Invalid index, do nothing or handle the error accordingly
-        return;
-    }
-
-    // Shift elements to the left to fill the gap
-    for (int i = index; i < *size - 1; i++) {
-        player[i] = player[i + 1];
-    }
-
-    // Decrease the size of the array
+    if (index < 0 || index >= *size) return;
+    for (int i = index; i < *size - 1; i++) player[i] = player[i + 1];
     (*size)--;
-    //printf("DEBUG: Player size after removal: %d\n", *size);
 }
 
 void switch_values_2D(Piece* player, int player_size){

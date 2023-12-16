@@ -2,8 +2,6 @@
 // Created by andreixmanu on 08/12/23.
 //
 #include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 #include "../include/2D_gamemode.h"
 
 void print_player_2D(Piece* player, int n) {

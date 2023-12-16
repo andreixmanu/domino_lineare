@@ -16,12 +16,13 @@
 #define VERTICAL 2
 
 Piece EMPTY_PIECE = {-1, -1};
+int rows = 1;
 
-int calculate_score_2D(Piece** table) {
+int calculate_score_2D(Piece **table) {
     int score = 0;
     for (int i = 0; i < 20; i++) {
         for (int j = 0; j < 20; j++) {
-            if(table[i][j].left_side == -1 && table[i][j].right_side == -1){
+            if (table[i][j].left_side == -1 && table[i][j].right_side == -1) {
                 continue;
             }
             score += table[i][j].left_side + table[i][j].right_side;
@@ -30,7 +31,7 @@ int calculate_score_2D(Piece** table) {
     return score;
 }
 
-void assign_pieces_2D(Piece* player, int n){
+void assign_pieces_2D(Piece *player, int n) {
     const int possible_pieces[21][2] = {
             {1, 1},
             {1, 2},
@@ -63,26 +64,26 @@ void assign_pieces_2D(Piece* player, int n){
     }
 }
 
-int first_piece_2D(Piece* row, int cols) {
+int first_piece_2D(Piece *row, int cols) {
     for (int i = 0; i < cols; i++) {
-        if(!(row[i].left_side == -1 && row[i].right_side == -1)) {
+        if (!(row[i].left_side == -1 && row[i].right_side == -1)) {
             return i;
         }
     }
     return -1;
 }
 
-int last_piece_2d(Piece* row, int cols) {
+int last_piece_2d(Piece *row, int cols) {
     for (int i = cols - 1; i >= 0; --i) {
-        if(!(row[i].left_side == -1 && row[i].right_side == -1)) {
+        if (!(row[i].left_side == -1 && row[i].right_side == -1)) {
             return i;
         }
     }
     return -1;
 }
 
-Piece* create_player_2D(size_t n){
-    Piece* player = malloc(n * sizeof(Piece));
+Piece *create_player_2D(size_t n) {
+    Piece *player = malloc(n * sizeof(Piece));
     if (player == NULL) {
         printf("DEBUG: Memory allocation failed.\n");
         exit(1);
@@ -90,9 +91,9 @@ Piece* create_player_2D(size_t n){
     return player;
 }
 
-int check_empty_player(Piece* player, int n) {
+int check_empty_player(Piece *player, int n) {
     for (int i = 0; i < n; i++) {
-        if(player[i].left_side != -1 && player[i].right_side != -1) {
+        if (player[i].left_side != -1 && player[i].right_side != -1) {
             return 0;
         }
     }
@@ -100,35 +101,22 @@ int check_empty_player(Piece* player, int n) {
 }
 
 //TODO check for border test cases
-int check_move_2D(Piece** table, Piece* piece, int side, int orientation) {
-    if (orientation == HORIZONTAL) {
-        if (side == RIGHT_SIDE) {
-            int last_valid_index = last_piece_2d(table[0], 20);
-            if (table[0][last_valid_index].right_side == piece->left_side) {
-                return MOVE_ALLOWED;
-            }
-        } else if (side == LEFT_SIDE) {
-            int first_valid_index = first_piece_2D(table[0], 20);
-            if (table[0][first_valid_index].left_side == piece->right_side) {
-                return MOVE_ALLOWED;
-            }
+int check_move_2D(Piece **table, Piece *piece, int side, int orientation) {
+    if (side == RIGHT_SIDE) {
+        int last_valid_index = last_piece_2d(table[0], 20);
+        if (table[0][last_valid_index].right_side == piece->left_side) {
+            return MOVE_ALLOWED;
         }
-    } else if (orientation == VERTICAL) {
-        int row = last_piece_2d(*table, 20) + 1;
-        if (row < 20 && table[row][0].left_side == -1 && table[row][0].right_side == -1) {
-            // Valid row for vertical placement
-            if (side == LEFT_SIDE && table[row][0].left_side == piece->right_side) {
-                return MOVE_ALLOWED;
-            } else if (side == RIGHT_SIDE && table[row][0].right_side == piece->left_side) {
-                return MOVE_ALLOWED;
-            }
+    } else if (side == LEFT_SIDE) {
+        int first_valid_index = first_piece_2D(table[0], 20);
+        if (table[0][first_valid_index].left_side == piece->right_side) {
+            return MOVE_ALLOWED;
         }
     }
-
     return MOVE_NOT_ALLOWED;
 }
 
-int pick_piece_index(Piece* player, int player_size, int pickedIndex) {
+int pick_piece_index(Piece *player, int player_size, int pickedIndex) {
     int result_index = 0;
     for (int i = 0; i < player_size; i++) {
         if (player[i].left_side == -1 && player[i].right_side == -1) {
@@ -142,7 +130,7 @@ int pick_piece_index(Piece* player, int player_size, int pickedIndex) {
     return -1;
 }
 
-void use_piece_2D(Piece** table, Piece* player, int piece, int side, int* player_size, int orientation) {
+void use_piece_2D(Piece **table, Piece *player, int piece, int side, int *player_size, int orientation) {
 
     if (orientation == HORIZONTAL) {
         int picked_piece_index = pick_piece_index(player, *player_size, piece);
@@ -181,6 +169,7 @@ void use_piece_2D(Piece** table, Piece* player, int piece, int side, int* player
         printf("Invalid move.\n");
     }
     if (orientation == VERTICAL) {
+        rows++;
         int picked_piece_index = pick_piece_index(player, *player_size, piece);
 
         if (picked_piece_index == -1) {
@@ -204,20 +193,20 @@ void use_piece_2D(Piece** table, Piece* player, int piece, int side, int* player
 
         if (side == LEFT_SIDE && first_valid_index != -1) {
             if (check_move_2D(table, &selected_piece, LEFT_SIDE, VERTICAL)) {
-                table[first_valid_index - 1][0].left_side = selected_piece.left_side;
-                table[first_valid_index - 1][0].right_side = -1;
-                table[first_valid_index][0].left_side = -1;
-                table[first_valid_index][0].right_side = selected_piece.right_side;
+                table[0][first_valid_index - 1].left_side = -1;
+                table[0][first_valid_index - 1].right_side = selected_piece.right_side;
+                table[1][first_valid_index - 1].left_side = selected_piece.left_side;
+                table[1][first_valid_index - 1].right_side = -1;
                 remove_piece_2D(player, player_size, picked_piece_index);
                 return;
             }
         }
         if (side == RIGHT_SIDE && last_valid_index != -1) {
             if (check_move_2D(table, &selected_piece, RIGHT_SIDE, VERTICAL)) {
-                table[last_valid_index + 1][0].left_side = -1;
-                table[last_valid_index + 1][0].right_side = selected_piece.right_side;
-                table[last_valid_index + 2][0].left_side = selected_piece.left_side;
-                table[last_valid_index + 2][0].right_side = -1;
+                table[0][last_valid_index + 1].left_side = selected_piece.left_side;
+                table[0][last_valid_index + 1].right_side = -1;
+                table[1][last_valid_index + 1].left_side = -1;
+                table[1][last_valid_index + 1].right_side = selected_piece.right_side;
                 remove_piece_2D(player, player_size, picked_piece_index);
                 return;
             }
@@ -227,13 +216,13 @@ void use_piece_2D(Piece** table, Piece* player, int piece, int side, int* player
 }
 
 
-void remove_piece_2D(Piece* player, int* size, int index) {
+void remove_piece_2D(Piece *player, int *size, int index) {
     if (index < 0 || index >= *size) return;
     for (int i = index; i < *size - 1; i++) player[i] = player[i + 1];
     (*size)--;
 }
 
-void switch_values_2D(Piece* player, int player_size){
+void switch_values_2D(Piece *player, int player_size) {
     printf("What piece do you want to switch?\n");
     int option;
     scanf("%d", &option);
@@ -247,8 +236,8 @@ void switch_values_2D(Piece* player, int player_size){
     player[index].right_side = temp;
 }
 
-void singleplayer_2D(Piece** table, int* pieces) {
-    Piece* player = create_player_2D(*pieces);
+void singleplayer_2D(Piece **table, int *pieces) {
+    Piece *player = create_player_2D(*pieces);
     assign_pieces_2D(player, *pieces);
 
     //first piece
@@ -268,7 +257,7 @@ void singleplayer_2D(Piece** table, int* pieces) {
     use_piece_2D(table, player, piece - 1, 0, pieces, orientation);
     //printf("DEBUG: Player size: %d\n", *pieces);
     printf("Table:\n");
-    print_table_2D(table, 1, 20);
+    print_table_2D(table, rows);
 
     while (!check_empty_player(player, *pieces)) {
 
@@ -285,7 +274,7 @@ void singleplayer_2D(Piece** table, int* pieces) {
             exit(0);
         }
 
-        if(piece2 == 's'){
+        if (piece2 == 's') {
             switch_values_2D(player, *pieces);
             continue;
         }
@@ -306,20 +295,21 @@ void singleplayer_2D(Piece** table, int* pieces) {
         if (isdigit(piece2)) {
             int num_piece = piece2 - '0';
             use_piece_2D(table, player, num_piece - 1, side, pieces, orientation2);
-            //printf("DEBUG: Player size: %d\n", *pieces);
             printf("Table:\n");
-            print_table_2D(table, 1, 20);
+            print_table_2D(table, rows);
             continue;
         }
 
         printf("ERROR YOU SHOULD NOT BE HERE\n");
     }
 
+    calculate_score_2D(table);
+
     exit(0);
 }
 
-Piece** create_matrix() {
-    Piece** matrix = malloc(20 * sizeof(Piece*));
+Piece **create_matrix() {
+    Piece **matrix = malloc(20 * sizeof(Piece *));
     if (matrix == NULL) {
         // Handle memory allocation failure
         exit(1);
@@ -337,7 +327,7 @@ Piece** create_matrix() {
 }
 
 void not_linear_domino() {
-    Piece** matrix = create_matrix();
+    Piece **matrix = create_matrix();
     printf("Welcome to (not) Linear Domino!\n");
     printf("How many pieces do you want to play with?:\n");
     int pieces;

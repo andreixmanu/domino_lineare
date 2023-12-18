@@ -101,14 +101,25 @@ int check_empty_player(Piece *player, int n) {
 }
 
 //TODO check for border test cases
+//TODO implement vertical piece check
 int check_move_2D(Piece **table, Piece *piece, int side, int orientation) {
     if (side == RIGHT_SIDE) {
         int last_valid_index = last_piece_2d(table[0], 20);
+        if (table[0][last_valid_index].right_side == -1 && table[0][last_valid_index].left_side != -1) {
+            if (table[0][last_valid_index].left_side == piece->left_side) {
+                return MOVE_ALLOWED;
+            } else return MOVE_NOT_ALLOWED;
+        }
         if (table[0][last_valid_index].right_side == piece->left_side) {
             return MOVE_ALLOWED;
         }
     } else if (side == LEFT_SIDE) {
         int first_valid_index = first_piece_2D(table[0], 20);
+        if (piece->left_side == -1 && piece->right_side != -1) {
+            if (table[0][first_valid_index].right_side != -1 && table[0][first_valid_index].left_side == -1) {
+                return MOVE_ALLOWED;
+            } else return MOVE_NOT_ALLOWED;
+        }
         if (table[0][first_valid_index].left_side == piece->right_side) {
             return MOVE_ALLOWED;
         }

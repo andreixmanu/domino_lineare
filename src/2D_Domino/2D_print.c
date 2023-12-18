@@ -50,5 +50,5 @@ void print_table_2D(Piece** table, int rows) {
         }
         printf("\n");
     }
-    printf("\n");
+    //printf("\n");
 }

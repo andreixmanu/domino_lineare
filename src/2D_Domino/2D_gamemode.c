@@ -25,6 +25,14 @@ int calculate_score_2D(Piece **table) {
             if (table[i][j].left_side == -1 && table[i][j].right_side == -1) {
                 continue;
             }
+            if(table[i][j].left_side == -1 && table[i][j].right_side != -1){
+                score += table[i][j].right_side;
+                continue;
+            }
+            if(table[i][j].left_side != -1 && table[i][j].right_side == -1){
+                score += table[i][j].left_side;
+                continue;
+            }
             score += table[i][j].left_side + table[i][j].right_side;
         }
     }
@@ -113,10 +121,11 @@ int check_move_2D(Piece **table, Piece *piece, int side, int orientation) {
         if (table[0][last_valid_index].right_side == piece->left_side) {
             return MOVE_ALLOWED;
         }
-    } else if (side == LEFT_SIDE) {
+    }
+    if (side == LEFT_SIDE) {
         int first_valid_index = first_piece_2D(table[0], 20);
-        if (piece->left_side == -1 && piece->right_side != -1) {
-            if (table[0][first_valid_index].right_side != -1 && table[0][first_valid_index].left_side == -1) {
+        if (table[0][first_valid_index].right_side != -1 && table[0][first_valid_index].left_side == -1) {
+            if (table[0][first_valid_index].right_side == piece->right_side) {
                 return MOVE_ALLOWED;
             } else return MOVE_NOT_ALLOWED;
         }
@@ -314,7 +323,7 @@ void singleplayer_2D(Piece **table, int *pieces) {
         printf("ERROR YOU SHOULD NOT BE HERE\n");
     }
 
-    calculate_score_2D(table);
+    printf("Game over! Score is: %d", calculate_score_2D(table));
 
     exit(0);
 }

@@ -3,6 +3,7 @@
 //
 #include <stdio.h>
 #include "../include/2D_gamemode.h"
+#include "../include/2D_gamemode.h"
 
 void print_player_2D(Piece* player, int n) {
     int j = 1;
@@ -27,6 +28,9 @@ void print_player_2D_DEBUG(Piece* player, int n) {
 
 void print_table_2D(Piece** table, int rows) {
 
+    //printf("DEBUG: Content of table[0][11] = %d|%d\n", table[0][11].left_side, table[0][11].right_side);
+    //printf("DEBUG: Content of table[1][11] = %d|%d\n", table[1][11].left_side, table[1][11].right_side);
+
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < 20; j++) {
             if (table[i][j].left_side == -1 && table[i][j].right_side == -1) {
@@ -47,5 +51,4 @@ void print_table_2D(Piece** table, int rows) {
         }
         printf("\n");
     }
-    //printf("\n");
 }

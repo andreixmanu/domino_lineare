@@ -9,5 +9,6 @@
 void print_player_2D(Piece* player, int n);
 void print_table_2D(Piece** table, int rows);
 void print_player_2D_DEBUG(Piece* player, int n);
+void print_table_2D_DEBUG(Piece** table);
 
 #endif //DOMINO_LINEARE_2D_PRINT_H

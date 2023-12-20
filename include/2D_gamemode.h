@@ -23,7 +23,7 @@ void switch_values_2D(Piece* player, int player_size);
 
 int check_empty_player(Piece* player, int n);
 
-int check_move_2D(Piece** table, Piece* piece, int side, int row);
+int check_move_2D(Piece* table_piece, Piece* piece, int side);
 
 int last_piece_2d(Piece* row, int cols);
 

@@ -109,7 +109,9 @@ int check_empty_player(Piece *player, int n) {
     return 1;
 }
 
-/*int check_move_2D(Piece **table, Piece *piece, int side, int row) {
+//TODO check for border test cases
+/*
+int check_move_2D(Piece **table, Piece *piece, int side, int row) {
     if (side == RIGHT_SIDE) {
         int last_valid_index = last_piece_2d(table[row], 20);
         if (table[row][last_valid_index].right_side == -1 && table[row][last_valid_index].left_side != -1) {
@@ -145,7 +147,7 @@ int check_move_2D(Piece* table_piece, Piece* using_piece, int side) {
                 return MOVE_ALLOWED;
             } else return MOVE_NOT_ALLOWED;
         }
-        if(using_piece->left_side == table_piece->right_side){
+        if(using_piece->left_side == table_piece->right_side){          //table piece is horizontal
             return MOVE_ALLOWED;
         }
     }
@@ -156,7 +158,7 @@ int check_move_2D(Piece* table_piece, Piece* using_piece, int side) {
                 return MOVE_ALLOWED;
             } else return MOVE_NOT_ALLOWED;
         }
-        if(using_piece->right_side == table_piece->left_side){
+        if(using_piece->right_side == table_piece->left_side){          //table piece is horizontal
             return MOVE_ALLOWED;
         }
     }
@@ -283,7 +285,10 @@ void use_piece_2D(Piece **table, Piece *player, int piece, int side, int *player
 }
 
 void remove_piece_2D(Piece *player, int *size, int index) {
-    if (index < 0 || index >= *size) return;
+    if (index < 0 || index >= *size){
+        printf("DEBUG: remove_piece_2D: index out of range.\n");
+        return;
+    }
     for (int i = index; i < *size - 1; i++) player[i] = player[i + 1];
     (*size)--;
 }

@@ -7,6 +7,12 @@
 
 #include "../include/2D_gamemode.h"
 
+void auto_switch_values_2D(Piece* player, int player_size, int n);
+
+int remove_piece_autocomplete(Piece *player, int *size, int index);
+
+int use_piece_autocomplete(Piece **table, Piece piece, int side);
+
 void undo_move(Piece** table, int side, int orientation);
 
 void ai_first_fit(Piece** table, Piece* player, int* player_size);

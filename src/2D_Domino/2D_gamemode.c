@@ -7,6 +7,7 @@
 #include "../include/2D_gamemode.h"
 #include "../include/2D_print.h"
 #include <ctype.h>
+#include "../include/2D_autocomplete.h"
 
 #define MOVE_ALLOWED 1
 #define MOVE_NOT_ALLOWED 0
@@ -165,6 +166,7 @@ int check_move_2D(Piece* table_piece, Piece* using_piece, int side) {
 
 int pick_piece_index(Piece *player, int player_size, int pickedIndex) {
     int result_index = 0;
+    //if(pickedIndex == 0) pickedIndex = 1;
     for (int i = 0; i < player_size; i++) {
         if (player[i].left_side == -1 && player[i].right_side == -1) {
             continue;
@@ -314,6 +316,7 @@ void singleplayer_2D(Piece **table, int *pieces) {
 
     use_piece_2D(table, player, piece - 1, 0, pieces, HORIZONTAL, rows - 1);
 
+    printf("\n\n\n\n\n\n\n\n\n\n");
     printf("\t\t\t\t\t\t\t\t\t\t\t\t {Table}\n");
     //print_table_2D(table, rows);
     print_table_2D_DEBUG(table);
@@ -339,6 +342,7 @@ void singleplayer_2D(Piece **table, int *pieces) {
 
         if (piece2 == 's') {
             switch_values_2D(player, *pieces);
+            print_table_2D(table, rows);
             continue;
         }
 
@@ -363,7 +367,8 @@ void singleplayer_2D(Piece **table, int *pieces) {
         if (isdigit(piece2)) {
             int num_piece = piece2 - '0';
             use_piece_2D(table, player, num_piece - 1, side, pieces, orientation2, row - 1);
-            printf("\t\t\t\t\t\t\t\t\t {Table}\n");
+            printf("\n\n\n\n\n\n\n\n\n\n");
+            printf("\t\t\t\t\t\t\t\t\t\t\t\t {Table}\n");
             //print_table_2D(table, rows);
             print_table_2D_DEBUG(table);
             continue;
@@ -412,7 +417,7 @@ void not_linear_domino() {
             singleplayer_2D(matrix, &pieces);
             break;
         case 2: // CPU mode
-            printf("CPU mode\n");
+            autocomplete_2D(matrix, &pieces);
             break;
         default:
             printf("Invalid game mode. Please choose 1 for singleplayer or 2 for CPU mode.\n");

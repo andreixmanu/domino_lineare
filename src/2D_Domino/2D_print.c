@@ -29,19 +29,19 @@ void print_table_2D_DEBUG(Piece** table) {
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 20; j++) {
             if (table[i][j].left_side == -1 && table[i][j].right_side == -1) {
-                printf("     ");
+                printf("[   ]");
                 continue;
             }
             if (table[i][j].left_side == -1) {
                 // Print the non -1 side
-                printf("[ %d ] ", table[i][j].right_side);
+                printf("[ %d ]", table[i][j].right_side);
                 continue;
             } else if (table[i][j].right_side == -1) {
                 // Print the non -1 side
-                printf("[ %d ] ", table[i][j].left_side);
+                printf("[ %d ]", table[i][j].left_side);
                 continue;
             } else {
-                printf("[%d|%d] ", table[i][j].left_side, table[i][j].right_side);
+                printf("[%d|%d]", table[i][j].left_side, table[i][j].right_side);
             }
         }
         // Posiziona la nuova riga qui, fuori dal ciclo interno

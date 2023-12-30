@@ -5,8 +5,8 @@
 #ifndef DOMINO_LINEARE_MAIN_H
 #define DOMINO_LINEARE_MAIN_H
 
-#define HORIZONTAL 0
-#define VERTICAL 1
+#define HORIZONTAL 1
+#define VERTICAL 2
 
 
 typedef struct dominio_piece Domino_piece;

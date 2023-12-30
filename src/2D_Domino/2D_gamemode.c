@@ -8,13 +8,13 @@
 #include "../include/2D_print.h"
 #include <ctype.h>
 #include "../include/2D_autocomplete.h"
+#include "../include/view_menu.h"
 
 #define MOVE_ALLOWED 1
 #define MOVE_NOT_ALLOWED 0
 #define LEFT_SIDE 1
 #define RIGHT_SIDE 2
-#define HORIZONTAL 1
-#define VERTICAL 2
+
 
 Piece EMPTY_PIECE = {-1, -1};
 int rows = 1;
@@ -109,36 +109,6 @@ int check_empty_player(Piece *player, int n) {
     return 1;
 }
 
-//TODO check for border test cases
-/*
-int check_move_2D(Piece **table, Piece *piece, int side, int row) {
-    if (side == RIGHT_SIDE) {
-        int last_valid_index = last_piece_2d(table[row], 20);
-        if (table[row][last_valid_index].right_side == -1 && table[row][last_valid_index].left_side != -1) {
-            if (table[row][last_valid_index].left_side == piece->left_side) {
-                return MOVE_ALLOWED;
-            } else return MOVE_NOT_ALLOWED;
-        }
-        if (table[row][last_valid_index].right_side == piece->left_side) {
-            return MOVE_ALLOWED;
-        }
-    }
-    if (side == LEFT_SIDE) {
-        int first_valid_index = first_piece_2D(table[row], 20);
-        if (table[row][first_valid_index].right_side != -1 && table[row][first_valid_index].left_side == -1) {
-            if (table[row][first_valid_index].right_side == piece->right_side) {
-                return MOVE_ALLOWED;
-            } else return MOVE_NOT_ALLOWED;
-        }
-        if (table[row][first_valid_index].left_side == piece->right_side) {
-            return MOVE_ALLOWED;
-        }
-    }
-    return MOVE_NOT_ALLOWED;
-}*/
-
-//TODO check for border test cases
-//TODO implement double vertical piece check
 int check_move_2D(Piece* table_piece, Piece* using_piece, int side) {
 
     if (side == RIGHT_SIDE) {
@@ -162,7 +132,6 @@ int check_move_2D(Piece* table_piece, Piece* using_piece, int side) {
             return MOVE_ALLOWED;
         }
     }
-
     return MOVE_NOT_ALLOWED;
 }
 
@@ -244,6 +213,7 @@ void use_piece_2D(Piece **table, Piece *player, int piece, int side, int *player
             table[1][10].left_side = -1;
             table[1][10].right_side = selected_piece.right_side;
             remove_piece_2D(player, player_size, picked_piece_index);
+            rows++;
             return;
         }
 
@@ -317,14 +287,16 @@ void singleplayer_2D(Piece **table, int *pieces) {
 
     printf("Choose the first piece to play:\n");
     int piece;
-    scanf("%d", &piece);
+    if (scanf("%d", &piece) != 1) {
+        printf("Invalid input. Please enter a number.\n");
+        flush_input_buffer();
+        singleplayer_2D(table, pieces);
+    }
 
     use_piece_2D(table, player, piece - 1, 0, pieces, HORIZONTAL, rows - 1);
 
-    printf("\n\n\n\n\n\n\n\n\n\n");
-    printf("\t\t\t\t\t\t\t\t\t\t\t\t {Table}\n");
-    //print_table_2D(table, rows);
-    print_table_2D_DEBUG(table);
+    printf("Table:\n");
+    print_table_2D(table, rows);
 
     //BEGIN GAME LOOP
     while (!check_empty_player(player, *pieces)) {
@@ -340,8 +312,14 @@ void singleplayer_2D(Piece **table, int *pieces) {
         char piece2;
         scanf(" %c", &piece2);
 
+        if(piece2 > *pieces) {
+            printf("Invalid piece. Please choose a piece between 1 and %d\n", *pieces);
+            flush_input_buffer();
+            continue;
+        }
+
         if (piece2 == '0') {
-            printf("Score is: %d\n", calculate_score_2D(table));
+            print_end_game_2D(table);
             exit(0);
         }
 
@@ -352,14 +330,14 @@ void singleplayer_2D(Piece **table, int *pieces) {
         }
 
         printf("Do you want to place it vertically or horizontally?\n");
-        printf("1. Horizontal\n"
-               "2. Vertical\n");
+        printf("\t1. Horizontal\n"
+               "\t2. Vertical\n");
         int orientation2;
         scanf("%d", &orientation2);
 
         printf("Choose a side to play:\n");
-        printf("1. Left\n"
-               "2. Right\n");
+        printf("\t1. Left\n"
+               "\t2. Right\n");
         int side;
         scanf("%d", &side);
 
@@ -372,16 +350,14 @@ void singleplayer_2D(Piece **table, int *pieces) {
         if (isdigit(piece2)) {
             int num_piece = piece2 - '0';
             use_piece_2D(table, player, num_piece - 1, side, pieces, orientation2, row - 1);
-            printf("\n\n\n\n\n\n\n\n\n\n");
-            printf("\t\t\t\t\t\t\t\t\t\t\t\t {Table}\n");
+            printf("Table:\n");
             //print_table_2D(table, rows);
-            print_table_2D_DEBUG(table);
+            print_table_2D(table, rows);
             continue;
         }
-        printf("ERROR YOU SHOULD NOT BE HERE\n");
     }
 
-    printf("Game over! Score is: %d", calculate_score_2D(table));
+    print_end_game_2D(table);
 
     exit(0);
 }
@@ -409,11 +385,16 @@ void not_linear_domino() {
     printf("Welcome to (not) Linear Domino!\n");
     printf("How many pieces do you want to play with?:\n");
     int pieces;
-    scanf("%d", &pieces);
+
+    if (scanf("%d", &pieces) != 1) {
+        printf("Invalid input. Please enter a number.\n\n");
+        flush_input_buffer();
+        not_linear_domino();
+    }
 
     printf("Choose the game mode:\n");
-    printf("1. Singleplayer\n");
-    printf("2. CPU mode\n");
+    printf("\t1. Singleplayer\n");
+    printf("\t2. CPU mode\n");
 
     int gameMode;
     scanf("%d", &gameMode);
@@ -426,6 +407,7 @@ void not_linear_domino() {
             break;
         default:
             printf("Invalid game mode. Please choose 1 for singleplayer or 2 for CPU mode.\n");
+            flush_input_buffer();
             not_linear_domino();
     }
 }

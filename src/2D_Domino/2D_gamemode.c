@@ -312,7 +312,13 @@ void singleplayer_2D(Piece **table, int *pieces) {
         char piece2;
         scanf(" %c", &piece2);
 
-        if(piece2 > *pieces) {
+        if (piece2 == 's') {
+            switch_values_2D(player, *pieces);
+            print_table_2D(table, rows);
+            continue;
+        }
+
+        if(piece2-48 > *pieces) {
             printf("Invalid piece. Please choose a piece between 1 and %d\n", *pieces);
             flush_input_buffer();
             continue;
@@ -323,11 +329,6 @@ void singleplayer_2D(Piece **table, int *pieces) {
             exit(0);
         }
 
-        if (piece2 == 's') {
-            switch_values_2D(player, *pieces);
-            print_table_2D(table, rows);
-            continue;
-        }
 
         printf("Do you want to place it vertically or horizontally?\n");
         printf("\t1. Horizontal\n"

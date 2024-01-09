@@ -238,12 +238,6 @@ void singleplayer(int pieces, Domino_piece *table) {
     int first_piece;
     scanf(" %d", &first_piece);
 
-    if (scanf("%d", &pieces) != 1) {
-        printf("Invalid input. Please enter a number.\n");
-        flush_input_buffer();
-        singleplayer(pieces, table);
-    }
-
     Domino_piece *selected_piece = get_player_piece(&player, first_piece, pieces);
     if(selected_piece == NULL) {
         printf("Selected piece is null\n");

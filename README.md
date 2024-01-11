@@ -1,26 +1,48 @@
-# Domino Lineare
+# Linear Domino
 
-## Roadmap
+#### created by Andrei Manu
 
-1. [x] Creazione menu di gioco
-2. [x] Allocazione spazio per tavolo di gioco
-3. [x] Utilizzo di struct per la gestione dei pezzi
-4. [ ] Assegnazione di pezzi random ai giocatori
-5. [x] Assegnazione dei pezzi del giocatore sul tavolo
-6. [x] Creazione di una funzione per la stampa del tavolo di gioco
-7. [x] Creazione di una funzione per la stampa dei pezzi dei giocatori
-8. [x] Creazione di una funzione per la stampa dei pezzi del tavolo
-9. [ ] Creazione di una funzione per la mossa della CPU
-10. [ ] Calcolo in tempo re  
+Interactive game written in C language where you have a set of n cards of given combinations, and can place them on
+a table. Every piece has two sides, and you can only place a piece beside another piece if the adjacent sides have the same
+number. The game ends when you don't have any more pieces, or when you cannot place any more pieces. 
 
-## Bug fix
+### Welcome to Linear Domino
 
-1. [x] Errore di stampa dei pezzi del giocatore/bot
-2. [ ] Errore di assegnazione dei pezzi: Possibili combinazioni [0|0]
-3. [ ] Il bot piazza un pezzo che non può essere piazzato
+There are two main gamemodes:
+- Linear Domino
+- (Not) Linear Domino
 
-## AI implementation
+As the names suggest, **Linear Domino** develops on a 1-dimension table, where you can play your cards either
+on the left side, or on the right side.
 
-1. CPU controlla il primo ed ultimo pezzo del tavolo
-2. CPU controlla i suoi pezzi
-3. CPU usa il pezzo che garantisce più punti
+In **(Not) Linear Domino** you can also place your pieces 'vertically', which develops your table in 2 dimensions.
+One side of the piece will be on the same row, while the other will be placed on the row below. You can create more than one
+binary tree in this way, and any tree can be as long as you can. 
+
+### Play against yourself or let the computer play!
+
+If you don't feel like playing, you can make the computer play, and see how it solves the puzzle with the 
+given pieces.
+
+---
+
+### Toolchain
+
+- **OS**
+    - **Windows**: 10+
+    - **Ubuntu**: 20.04.5 LTS
+- **Builder**
+    - **CMake**: 3.25
+- **Language**
+    - **C**: C99
+
+> NOTE: it is suggested to use the built-in tools of CLion to integrate the
+> project with fewer problems
+
+### Dependencies
+
+No other dependencies are needed.
+
+### Documentation
+
+[Generated documentation](docs/html/index.html) by Doxygen

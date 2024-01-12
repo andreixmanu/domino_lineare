@@ -278,6 +278,7 @@ void switch_values_2D(Piece *player, int player_size) {
 }
 
 void singleplayer_2D(Piece **table, int *pieces) {
+    clear_screen();
     Piece *player = create_player_2D(*pieces);
     assign_pieces_2D(player, *pieces);
 
@@ -295,6 +296,7 @@ void singleplayer_2D(Piece **table, int *pieces) {
 
     use_piece_2D(table, player, piece - 1, 0, pieces, HORIZONTAL, rows - 1);
 
+    clear_screen();
     printf("Table:\n");
     print_table_2D(table, rows);
 
@@ -325,7 +327,7 @@ void singleplayer_2D(Piece **table, int *pieces) {
         }
 
         if (piece2 == '0') {
-            print_end_game_2D(table);
+            print_end_game_2D(table, rows);
             exit(0);
         }
 
@@ -351,14 +353,14 @@ void singleplayer_2D(Piece **table, int *pieces) {
         if (isdigit(piece2)) {
             int num_piece = piece2 - '0';
             use_piece_2D(table, player, num_piece - 1, side, pieces, orientation2, row - 1);
+            clear_screen();
             printf("Table:\n");
-            //print_table_2D(table, rows);
             print_table_2D(table, rows);
             continue;
         }
     }
 
-    print_end_game_2D(table);
+    print_end_game_2D(table, rows);
 
     exit(0);
 }
@@ -382,6 +384,7 @@ Piece **create_matrix() {
 }
 
 void not_linear_domino() {
+    clear_screen();
     Piece **matrix = create_matrix();
     printf("Welcome to (not) Linear Domino!\n");
     printf("How many pieces do you want to play with?:\n");

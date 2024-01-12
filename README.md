@@ -24,6 +24,12 @@ binary tree in this way, and any tree can be as long as you can.
 If you don't feel like playing, you can make the computer play, and see how it solves the puzzle with the 
 given pieces.
 
+### Up for a challenge?
+
+In the 'Puzzle' mode you can solve 3+1 difficult puzzles, but be careful: they are 
+not easy at all! Only if you beat the three first puzzles you gain access to the fourth and
+most difficult.
+
 ---
 
 ### Toolchain

@@ -66,6 +66,6 @@ void print_table_2D_DEBUG(Piece** table);
  * @param table A 2D array of Piece representing the domino table.
  *              The table is assumed to have dimensions 5x20.
  */
-void print_end_game_2D(Piece** table);
+void print_end_game_2D(Piece** table, int rows);
 
 #endif //DOMINO_LINEARE_2D_PRINT_H

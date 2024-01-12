@@ -5,6 +5,7 @@
 #include <time.h>
 
 int main() {
+    clear_screen();
   setvbuf(stdout, NULL, _IONBF,
           0); // disable stdout buffering for debug reasons
   srand(time(NULL));

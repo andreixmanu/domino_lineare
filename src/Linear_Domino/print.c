@@ -45,7 +45,8 @@ void print_player(Player *player) {
 }
 
 void print_rules() {
-
+    clear_screen();
+    printf("Rules:");
     printf("\tYou can chose to play or to let the CPU play with its own pieces.\n"
            "\tYou have a chosen number of pieces, and each piece has two sides.\n"
            "\tPlace a piece on the table, and the next pieces to be placed must \n"
@@ -59,10 +60,13 @@ void print_rules() {
            "\tYou can also place pieces in vertical, if you choose to play the non-linear mode.\n"
            "\tSame rules apply to the vertical placing of the pieces.\n");
 
+    char x;
+    scanf(" %c", &x);
     view_menu();
 }
 
 void print_end_game(Domino_piece **table) {
+    clear_screen();
     printf("\n"
            "  ________                           ________                          ._.\n"
            " /  _____/ _____     _____    ____   \\_____  \\  ___  __  ____  _______ | |\n"
@@ -82,6 +86,9 @@ void print_end_game(Domino_piece **table) {
            "                                                  \n");
 
     printf("%d\n", calculate_score(*table));
+
+    printf("Printing final table\n");
+    print_table(*table);
 
     printf("Do you want to play again? (y/n)\n");
     char answer;

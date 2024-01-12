@@ -3,6 +3,7 @@
 #include "../include/2D_autocomplete.h"
 #include "../include/2D_print.h"
 #include <stdlib.h>
+#include "../include/view_menu.h"
 
 #define LEFT_SIDE 1
 #define RIGHT_SIDE 2
@@ -151,6 +152,7 @@ void ultimate_try(Piece** table, Piece* player, int* pieces){
 }
 
 void autocomplete_2D(Piece **table, int *pieces) {
+    clear_screen();
     Piece *player = create_player_2D(*pieces);
     assign_pieces_2D(player, *pieces);
     printf("\nBots pieces:\n");
@@ -173,5 +175,5 @@ void autocomplete_2D(Piece **table, int *pieces) {
     printf("Table:\n");
     print_table_2D(table, 1);
 
-    print_end_game_2D(table);
+    print_end_game_2D(table, 1);
 }

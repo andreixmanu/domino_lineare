@@ -229,6 +229,7 @@ void switch_values(Player *player, int n){
 }
 
 void singleplayer(int pieces, Domino_piece *table) {
+    clear_screen();
     Player player = create_player();
     assign_pieces(&player, pieces);
 
@@ -246,6 +247,8 @@ void singleplayer(int pieces, Domino_piece *table) {
         singleplayer(pieces, table);
     }
     use_piece(selected_piece, &table, RIGHT_SIDE, &player);
+    clear_screen();
+    printf("Table:\n");
     print_table(table);
 
     while (player.first_piece != NULL) {
@@ -269,6 +272,7 @@ void singleplayer(int pieces, Domino_piece *table) {
             int piece_to_switch;
             scanf("%d", &piece_to_switch);
             switch_values(&player, piece_to_switch);
+            clear_screen();
             continue; // Skip the rest of the loop and go to the next iteration
         }
 
@@ -297,6 +301,8 @@ void singleplayer(int pieces, Domino_piece *table) {
                 continue;
             }
         }
+        clear_screen();
+        printf("Table:\n");
         print_table(table);
     }
     print_end_game(&table);
@@ -304,11 +310,10 @@ void singleplayer(int pieces, Domino_piece *table) {
 
 
 void init_game() {
-
+    clear_screen();
     Domino_piece *table = create_table();
 
     printf("How many pieces do you want to play with?:\n");
-
 
     if (scanf("%d", &max_pieces) != 1) {
         printf("Invalid input. Please enter a number.\n");

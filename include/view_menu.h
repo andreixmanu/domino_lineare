@@ -25,5 +25,12 @@ void view_menu();
  */
 void flush_input_buffer();
 
+/**
+ * @brief Clears the terminal screen based on the operating system.
+ *
+ * This function determines the operating system in use and uses the appropriate command
+ * to clear the terminal screen.
+ */
+void clear_screen();
 
 #endif //DOMINO_LINEARE_VIEW_MENU_H

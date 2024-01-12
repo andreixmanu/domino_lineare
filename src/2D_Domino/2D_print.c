@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "../include/2D_gamemode.h"
 #include "../include/main.h"
+#include "../include/view_menu.h"
 
 void print_player_2D(Piece* player, int n) {
     int j = 1;
@@ -72,7 +73,8 @@ void print_table_2D(Piece** table, int rows) {
     }
 }
 
-void print_end_game_2D(Piece** table){
+void print_end_game_2D(Piece** table, int rows){
+    clear_screen();
     printf("\n"
            "  ________                           ________                          ._.\n"
            " /  _____/ _____     _____    ____   \\_____  \\  ___  __  ____  _______ | |\n"
@@ -92,6 +94,9 @@ void print_end_game_2D(Piece** table){
            "                                                  \n");
 
     printf("%d\n", calculate_score_2D(table));
+
+    printf("Printing final table\n");
+    print_table_2D(table, rows);
 
     printf("Do you want to play again? (y/n)\n");
     char answer;

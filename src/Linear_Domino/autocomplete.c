@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include "include/view_menu.h"
 
 #define LEFT_SIDE 1
 #define RIGHT_SIDE 2
@@ -116,7 +117,7 @@ Id_piece stupid_move(Domino_piece *table, Player *bot) {
 }
 
 void autocomplete_stupid(Player *bot, Domino_piece *table, int pieces) {
-
+    clear_screen();
     printf("Bot's pieces:\n");
     print_player(bot);
 
@@ -130,9 +131,6 @@ void autocomplete_stupid(Player *bot, Domino_piece *table, int pieces) {
         piece = stupid_move(table, bot);
     }
     printf("\n");
-
-    printf("Printing final table\n");
-    print_table(table);
 
     print_end_game(&table);
     exit(EXIT_SUCCESS);

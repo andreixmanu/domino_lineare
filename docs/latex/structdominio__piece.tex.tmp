@@ -1,0 +1,26 @@
+\hypertarget{structdominio__piece}{}\doxysection{dominio\+\_\+piece Struct Reference}
+\label{structdominio__piece}\index{dominio\_piece@{dominio\_piece}}
+
+
+Collaboration diagram for dominio\+\_\+piece\+:
+% FIG 0
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structdominio__piece_ac77c2f943f424fff7fba72f94bfe1c1d}\label{structdominio__piece_ac77c2f943f424fff7fba72f94bfe1c1d}} 
+int {\bfseries left\+\_\+side}
+\item 
+\mbox{\Hypertarget{structdominio__piece_a0298f350c44e54767bdb079b663153e8}\label{structdominio__piece_a0298f350c44e54767bdb079b663153e8}} 
+int {\bfseries right\+\_\+side}
+\item 
+\mbox{\Hypertarget{structdominio__piece_ab4cd509a7f595d1c1dd1738be44bbac7}\label{structdominio__piece_ab4cd509a7f595d1c1dd1738be44bbac7}} 
+\mbox{\hyperlink{structdominio__piece}{Domino\+\_\+piece}} $\ast$ {\bfseries next}
+\item 
+\mbox{\Hypertarget{structdominio__piece_aa2d12541acc37b250fdd36659111ceac}\label{structdominio__piece_aa2d12541acc37b250fdd36659111ceac}} 
+\mbox{\hyperlink{structdominio__piece}{Domino\+\_\+piece}} $\ast$ {\bfseries previous}
+\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/mnt/c/\+Users/andre/\+CLion\+Projects/domino\+\_\+lineare/include/main.\+h\end{DoxyCompactItemize}

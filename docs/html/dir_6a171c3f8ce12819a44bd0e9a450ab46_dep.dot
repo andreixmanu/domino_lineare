@@ -1,0 +1,16 @@
+digraph "/mnt/c/Users/andre/CLionProjects/domino_lineare/cmake-build-debug/CMakeFiles/domino_lineare.dir/src"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  compound=true
+  subgraph clusterdir_ac10f258a2b9698af650c5f4839e009e {
+    graph [ bgcolor="#edf0f7", pencolor="grey50", style="filled,dashed,", label="domino_lineare.dir", fontname="Helvetica", fontsize="10", URL="dir_ac10f258a2b9698af650c5f4839e009e.html"]
+  subgraph clusterdir_6a171c3f8ce12819a44bd0e9a450ab46 {
+    graph [ bgcolor="#edf0f7", pencolor="grey25", style="filled,bold,", label="", fontname="Helvetica", fontsize="10", URL="dir_6a171c3f8ce12819a44bd0e9a450ab46.html"]
+    dir_6a171c3f8ce12819a44bd0e9a450ab46 [shape=plaintext, label="src"];
+  dir_528b8697e02b3e7e91f6cad2c0be38b6 [shape=box, label="2D_Domino", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_528b8697e02b3e7e91f6cad2c0be38b6.html"];
+  dir_09513444a62afde5335395315f30f6d3 [shape=box, label="Linear_Domino", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_09513444a62afde5335395315f30f6d3.html"];
+  }
+  }
+}

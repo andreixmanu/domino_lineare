@@ -1,0 +1,11 @@
+digraph "/mnt/c/Users/andre/CLionProjects/domino_lineare/cmake-build-debug/CMakeFiles/domino_lineare.dir/src/Linear_Domino"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  compound=true
+  subgraph clusterdir_6a171c3f8ce12819a44bd0e9a450ab46 {
+    graph [ bgcolor="#edf0f7", pencolor="grey50", style="filled,dashed,", label="src", fontname="Helvetica", fontsize="10", URL="dir_6a171c3f8ce12819a44bd0e9a450ab46.html"]
+  dir_09513444a62afde5335395315f30f6d3 [shape=box, label="Linear_Domino", style="filled,bold,", fillcolor="#edf0f7", color="grey25", URL="dir_09513444a62afde5335395315f30f6d3.html"];
+  }
+}

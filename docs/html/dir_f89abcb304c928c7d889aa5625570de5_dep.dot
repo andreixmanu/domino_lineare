@@ -1,0 +1,16 @@
+digraph "/mnt/c/Users/andre/CLionProjects/domino_lineare/cmake-build-debug/CMakeFiles"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  compound=true
+  subgraph clusterdir_95e29a8b8ee7c54052c171a88bb95675 {
+    graph [ bgcolor="#edf0f7", pencolor="grey25", style="filled,dashed,", label="cmake-build-debug", fontname="Helvetica", fontsize="10", URL="dir_95e29a8b8ee7c54052c171a88bb95675.html"]
+  subgraph clusterdir_f89abcb304c928c7d889aa5625570de5 {
+    graph [ bgcolor="#edf0f7", pencolor="grey25", style="filled,bold,", label="", fontname="Helvetica", fontsize="10", URL="dir_f89abcb304c928c7d889aa5625570de5.html"]
+    dir_f89abcb304c928c7d889aa5625570de5 [shape=plaintext, label="CMakeFiles"];
+  dir_d9df99bba169678ac8f965ce38851881 [shape=box, label="3.25.1", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_d9df99bba169678ac8f965ce38851881.html"];
+  dir_ac10f258a2b9698af650c5f4839e009e [shape=box, label="domino_lineare.dir", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_ac10f258a2b9698af650c5f4839e009e.html"];
+  }
+  }
+}

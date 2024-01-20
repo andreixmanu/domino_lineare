@@ -5,6 +5,10 @@
 #ifndef DOMINO_LINEARE_MAIN_H
 #define DOMINO_LINEARE_MAIN_H
 
+#define HORIZONTAL 1
+#define VERTICAL 2
+
+
 typedef struct dominio_piece Domino_piece;
 struct dominio_piece {
     int left_side;

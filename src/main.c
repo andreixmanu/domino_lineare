@@ -1,17 +1,14 @@
+#include "../include/print.h"
+#include "../include/view_menu.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "../include/view_menu.h"
-#include "../include/print.h"
-#include "../include/game.h"
-#include <stdbool.h>
-#include "../include/main.h"
 #include <time.h>
 
-//either side has a number from 0 to 6
-
-int main(){
-    setbuf(stdout, NULL); //disable stdout buffering
-    srand(time(NULL));
-    view_menu();
-    return 0;
+int main() {
+    clear_screen();
+  setvbuf(stdout, NULL, _IONBF,
+          0); // disable stdout buffering for debug reasons
+  srand(time(NULL));
+  view_menu();
+  return 0;
 }

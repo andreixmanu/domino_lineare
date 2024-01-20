@@ -1,0 +1,48 @@
+\hypertarget{2D__gamemode_8h_source}{}\doxysection{2D\+\_\+gamemode.\+h}
+\label{2D__gamemode_8h_source}\index{/mnt/c/Users/andre/CLionProjects/domino\_lineare/include/2D\_gamemode.h@{/mnt/c/Users/andre/CLionProjects/domino\_lineare/include/2D\_gamemode.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{//}}
+\DoxyCodeLine{2 \textcolor{comment}{// Created by manua on 04/12/2023.}}
+\DoxyCodeLine{3 \textcolor{comment}{//}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#ifndef DOMINO\_LINEARE\_2D\_GAMEMODE\_H}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#define DOMINO\_LINEARE\_2D\_GAMEMODE\_H}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{20 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structpiece}{piece}} \mbox{\hyperlink{structpiece}{Piece}};}
+\DoxyCodeLine{21 \textcolor{keyword}{struct }\mbox{\hyperlink{structpiece}{piece}} \{}
+\DoxyCodeLine{22     \textcolor{keywordtype}{int} left\_side;}
+\DoxyCodeLine{23     \textcolor{keywordtype}{int} right\_side;}
+\DoxyCodeLine{24 \};}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{44 \textcolor{keywordtype}{int} calculate\_score\_2D(\mbox{\hyperlink{structpiece}{Piece}}** table);}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{64 \textcolor{keywordtype}{void} assign\_pieces\_2D(\mbox{\hyperlink{structpiece}{Piece}}* \mbox{\hyperlink{structplayer}{player}}, \textcolor{keywordtype}{int} n);}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{81 \textcolor{keywordtype}{int} first\_piece\_2D(\mbox{\hyperlink{structpiece}{Piece}}* row, \textcolor{keywordtype}{int} cols);}
+\DoxyCodeLine{82 }
+\DoxyCodeLine{99 \textcolor{keywordtype}{int} last\_piece\_2d(\mbox{\hyperlink{structpiece}{Piece}}* row, \textcolor{keywordtype}{int} cols);}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{115 \mbox{\hyperlink{structpiece}{Piece}}* create\_player\_2D(\textcolor{keywordtype}{size\_t} n);}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{132 \textcolor{keywordtype}{int} check\_empty\_player(\mbox{\hyperlink{structpiece}{Piece}}* \mbox{\hyperlink{structplayer}{player}}, \textcolor{keywordtype}{int} n);}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{151 \textcolor{keywordtype}{int} check\_move\_2D(\mbox{\hyperlink{structpiece}{Piece}}* table\_piece, \mbox{\hyperlink{structpiece}{Piece}}* \mbox{\hyperlink{structpiece}{piece}}, \textcolor{keywordtype}{int} side);}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{170 \textcolor{keywordtype}{int} pick\_piece\_index(\mbox{\hyperlink{structpiece}{Piece}}* \mbox{\hyperlink{structplayer}{player}}, \textcolor{keywordtype}{int} n, \textcolor{keywordtype}{int} pickedIndex);}
+\DoxyCodeLine{171 }
+\DoxyCodeLine{191 \textcolor{keywordtype}{void} use\_piece\_2D(\mbox{\hyperlink{structpiece}{Piece}}** table, \mbox{\hyperlink{structpiece}{Piece}}* \mbox{\hyperlink{structplayer}{player}}, \textcolor{keywordtype}{int} \mbox{\hyperlink{structpiece}{piece}}, \textcolor{keywordtype}{int} side, \textcolor{keywordtype}{int}* player\_size, \textcolor{keywordtype}{int} orientation, \textcolor{keywordtype}{int} row);}
+\DoxyCodeLine{192 }
+\DoxyCodeLine{206 \textcolor{keywordtype}{void} remove\_piece\_2D(\mbox{\hyperlink{structpiece}{Piece}}* \mbox{\hyperlink{structplayer}{player}}, \textcolor{keywordtype}{int}* size, \textcolor{keywordtype}{int} index);}
+\DoxyCodeLine{207 }
+\DoxyCodeLine{221 \textcolor{keywordtype}{void} switch\_values\_2D(\mbox{\hyperlink{structpiece}{Piece}}* \mbox{\hyperlink{structplayer}{player}}, \textcolor{keywordtype}{int} player\_size);}
+\DoxyCodeLine{222 }
+\DoxyCodeLine{238 \textcolor{keywordtype}{void} singleplayer\_2D(\mbox{\hyperlink{structpiece}{Piece}}** matrix, \textcolor{keywordtype}{int}* player\_size);}
+\DoxyCodeLine{239 }
+\DoxyCodeLine{253 \mbox{\hyperlink{structpiece}{Piece}}** create\_matrix();}
+\DoxyCodeLine{254 }
+\DoxyCodeLine{268 \textcolor{keywordtype}{void} not\_linear\_domino();}
+\DoxyCodeLine{269 }
+\DoxyCodeLine{270 \textcolor{preprocessor}{\#endif }\textcolor{comment}{//DOMINO\_LINEARE\_2D\_GAMEMODE\_H}}
+
+\end{DoxyCode}
